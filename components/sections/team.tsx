@@ -1,112 +1,125 @@
-"use client"
+"use client";
 
-import React from 'react'
-import { motion } from 'framer-motion'
-const LinkedinIcon = ({ size = 24, className }: { size?: number, className?: string }) => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width={size}
-    height={size}
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    className={className}
-  >
-    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
-    <rect width="4" height="12" x="2" y="9" />
-    <circle cx="4" cy="4" r="2" />
-  </svg>
-);
+import React, { useRef, useEffect } from 'react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-const TwitterIcon = ({ size = 24, className }: { size?: number, className?: string }) => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width={size}
-    height={size}
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    className={className}
-  >
-    <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z" />
-  </svg>
-);
+gsap.registerPlugin(ScrollTrigger);
 
 const team = [
   {
-    name: 'Sarah Jenkins',
-    role: 'Chief Executive Officer',
-    image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=800&auto=format&fit=crop',
+    name: 'Sarah',
+    surname: 'Jenkins',
+    role: 'Creative Director',
+    image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=1200&auto=format&fit=crop',
+    align: 'left'
   },
   {
-    name: 'David Chen',
-    role: 'Chief Technology Officer',
-    image: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=800&auto=format&fit=crop',
+    name: 'David',
+    surname: 'Chen',
+    role: 'Technical Lead',
+    image: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=1200&auto=format&fit=crop',
+    align: 'right'
   },
   {
-    name: 'Elena Rodriguez',
-    role: 'Head of Digital Strategy',
-    image: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=800&auto=format&fit=crop',
-  },
-  {
-    name: 'Michael Foster',
-    role: 'VP of Engineering',
-    image: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=800&auto=format&fit=crop',
+    name: 'Elena',
+    surname: 'Rodriguez',
+    role: 'Art Director',
+    image: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=1200&auto=format&fit=crop',
+    align: 'left'
   }
-]
+];
 
 export function Team() {
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!containerRef.current) return;
+
+    const ctx = gsap.context(() => {
+      const portraits = gsap.utils.toArray('.portrait-container');
+      
+      portraits.forEach((portrait: any) => {
+        const img = portrait.querySelector('img');
+        
+        // Parallax image within crop
+        gsap.to(img, {
+          yPercent: 20,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: portrait,
+            start: 'top bottom',
+            end: 'bottom top',
+            scrub: true,
+          }
+        });
+      });
+    }, containerRef);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <section className="py-32 bg-background">
-      <div className="container">
-        <div className="text-center mb-20">
-          <h2 className="text-3xl md:text-5xl font-heading font-bold mb-6 text-foreground">
-            Our Leadership
-          </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Decades of combined experience in enterprise IT, high-frequency trading infrastructure, and digital transformation.
+    <section className="py-32 md:py-48 bg-background relative z-10 overflow-hidden" ref={containerRef}>
+      
+      {/* Decorative background typography */}
+      <div className="absolute top-1/2 left-0 -translate-y-1/2 w-full text-center pointer-events-none opacity-5">
+        <h2 className="text-[25vw] font-black uppercase leading-none whitespace-nowrap mix-blend-multiply">
+          The Studio
+        </h2>
+      </div>
+
+      <div className="container relative z-10">
+        
+        <div className="mb-32 flex justify-between items-start border-t border-foreground pt-8">
+          <p className="text-xs uppercase tracking-widest font-mono">
+            [ Directors ]
           </p>
+          <div className="text-right">
+            <h2 className="text-5xl md:text-7xl font-serif italic">
+              Faces behind <br/> the <span className="font-sans font-black uppercase not-italic">work.</span>
+            </h2>
+          </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="flex flex-col gap-32 md:gap-48 mt-32">
           {team.map((member, index) => (
-            <motion.div 
+            <div 
               key={index}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="group"
+              className={`relative flex flex-col md:flex-row items-center gap-8 ${member.align === 'right' ? 'md:flex-row-reverse' : ''}`}
             >
-              <div className="relative overflow-hidden rounded-2xl aspect-[3/4] mb-6">
-                <img 
-                  src={member.image} 
-                  alt={member.name}
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-primary/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-6 gap-4">
-                  <a href="#" className="w-10 h-10 rounded-full bg-white text-primary flex items-center justify-center hover:bg-background hover:scale-110 transition-all">
-                    <LinkedinIcon size={20} />
-                  </a>
-                  <a href="#" className="w-10 h-10 rounded-full bg-white text-primary flex items-center justify-center hover:bg-background hover:scale-110 transition-all">
-                    <TwitterIcon size={20} />
-                  </a>
+              
+              {/* Portrait */}
+              <div className="w-full md:w-[45%] lg:w-[35%]">
+                <div 
+                  className="portrait-container relative w-full aspect-[2/3] overflow-hidden group cursor-interactive border border-border shadow-2xl"
+                >
+                  <img 
+                    src={member.image} 
+                    alt={`${member.name} ${member.surname}`}
+                    className="absolute inset-0 w-full h-[120%] -top-[10%] object-cover filter grayscale opacity-90 transition-all duration-1000 ease-out group-hover:grayscale-0 group-hover:scale-105 group-hover:opacity-100"
+                  />
+                  <div className="absolute inset-0 bg-primary/20 mix-blend-multiply opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
                 </div>
               </div>
-              <div className="text-center">
-                <h3 className="text-xl font-bold font-heading text-foreground">{member.name}</h3>
-                <p className="text-primary font-medium text-sm mt-1">{member.role}</p>
+              
+              {/* Giant Overlapping Typography */}
+              <div className={`w-full md:w-[55%] lg:w-[65%] flex flex-col justify-center ${member.align === 'right' ? 'md:items-end text-right' : 'md:items-start text-left'} absolute md:relative top-1/2 -translate-y-1/2 md:top-auto md:translate-y-0 z-20 pointer-events-none`}>
+                <h3 className="flex flex-col uppercase font-black leading-[0.8] tracking-tighter mix-blend-difference text-white md:mix-blend-normal md:text-foreground">
+                  <span className="text-[15vw] md:text-[10vw] ml-4 md:ml-0">{member.name}</span>
+                  <span className="text-[15vw] md:text-[10vw] text-transparent text-outline md:text-outline-hover ml-12 md:ml-24">{member.surname}</span>
+                </h3>
+                <div className="mt-8 flex items-center gap-4 ml-4 md:ml-0 bg-background/80 md:bg-transparent p-2 md:p-0 backdrop-blur-sm md:backdrop-blur-none">
+                  {member.align === 'left' && <div className="w-12 h-[1px] bg-primary"></div>}
+                  <p className="text-sm font-bold uppercase tracking-[0.2em] text-primary">{member.role}</p>
+                  {member.align === 'right' && <div className="w-12 h-[1px] bg-primary"></div>}
+                </div>
               </div>
-            </motion.div>
+
+            </div>
           ))}
         </div>
       </div>
     </section>
-  )
+  );
 }

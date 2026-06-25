@@ -1,103 +1,154 @@
-"use client"
+"use client";
 
-import React, { useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import { ArrowUpRight } from 'lucide-react'
-import { cn } from '@/lib/utils'
+import React, { useRef, useEffect } from 'react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { ScrollParallax, MouseParallax } from "@/components/animations/parallax";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const services = [
   {
-    title: 'Brand Strategy',
-    description: 'We craft comprehensive brand architectures that resonate with your target audience and stand the test of time.',
-    image: 'https://images.unsplash.com/photo-1542744094-24638eff58bb?q=80&w=1000&auto=format&fit=crop',
+    title: 'Digital Ecosystems',
+    description: 'We construct digital worlds. Pure, uncompromising identity systems built for the spatial web.',
+    number: '01'
   },
   {
-    title: 'Digital Products',
-    description: 'Award-winning websites and applications built with cutting-edge technology and human-centric design.',
-    image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1000&auto=format&fit=crop',
+    title: 'Platform Architecture',
+    description: 'Interfaces that feel alive. Component-led systems designed with the precision of modern engineering.',
+    number: '02'
   },
   {
-    title: 'Motion Design',
-    description: 'Cinematic animations and 3D experiences that bring your brand narrative to life.',
-    image: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=1000&auto=format&fit=crop',
+    title: 'Interactive Motion',
+    description: 'Breaking the flat page. We build environments. Immersive, motion-rich digital architecture that responds to you.',
+    number: '03'
   },
   {
-    title: 'Growth Marketing',
-    description: 'Data-driven campaigns that scale your business globally and maximize ROI.',
-    image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1000&auto=format&fit=crop',
+    title: 'Creative Direction',
+    description: 'Holistic vision from concept to execution. We dictate the mood, tone, and visual rhythm of the digital experience.',
+    number: '04'
   }
-]
+];
 
 export function Services() {
-  const [hoveredIndex, setHoveredIndex] = useState<number | null>(0)
+  const containerRef = useRef<HTMLElement>(null);
+  const panelsRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!containerRef.current || !panelsRef.current) return;
+
+    const panels = gsap.utils.toArray(".service-panel");
+    
+    const ctx = gsap.context(() => {
+      // Create a pinned timeline for overlapping panels
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: "top top",
+          end: "+=300%", // Scroll for 3 screen heights
+          scrub: 1,
+          pin: true,
+        }
+      });
+
+      // Initially hide panels except first
+      gsap.set(panels.slice(1), { yPercent: 100, opacity: 0, scale: 0.9, rotationX: 10 });
+
+      panels.forEach((panel: any, i) => {
+        if (i === 0) return; // Skip first panel as it's already visible
+        
+        // Animate out previous panel
+        tl.to(panels[i - 1], {
+          yPercent: -20,
+          scale: 0.95,
+          opacity: 0.5,
+          rotationX: -5,
+          ease: "none"
+        }, i);
+
+        // Animate in current panel
+        tl.to(panel, {
+          yPercent: 0,
+          opacity: 1,
+          scale: 1,
+          rotationX: 0,
+          ease: "power2.out"
+        }, i);
+      });
+
+    }, containerRef);
+
+    return () => ctx.revert();
+  }, []);
 
   return (
-    <section className="py-32 bg-secondary text-secondary-foreground">
-      <div className="container">
-        <div className="flex flex-col md:flex-row justify-between items-end mb-24">
-          <h2 className="text-3xl md:text-5xl font-heading font-bold leading-none">
-            Capabilities
-          </h2>
-          <p className="text-lg max-w-sm text-muted-foreground mt-8 md:mt-0 font-medium">
-            End-to-end digital solutions for modern forward-thinking enterprises.
-          </p>
+    <section ref={containerRef} className="relative h-screen bg-background overflow-hidden flex items-center justify-center">
+      
+      {/* Background Layer (Parallax) */}
+      <div className="absolute inset-0 z-0 pointer-events-none">
+        <ScrollParallax speed={0.3} className="w-full h-full">
+          <div className="absolute inset-0 blueprint-grid opacity-20"></div>
+          {/* Large background typography */}
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-[0.03]">
+            <h2 className="text-[25vw] font-black tracking-tighter whitespace-nowrap">SYSTEMS</h2>
+          </div>
+        </ScrollParallax>
+      </div>
+
+      <div className="container relative z-10 w-full h-full flex flex-col md:flex-row items-center justify-between gap-12 py-20">
+        
+        {/* Left: Static Title */}
+        <div className="w-full md:w-1/3 flex flex-col items-start z-20">
+          <MouseParallax strength={0.02}>
+            <p className="text-xs uppercase tracking-widest font-mono text-primary mb-4">
+              [ Capabilities ]
+            </p>
+            <h2 className="text-5xl md:text-7xl font-black uppercase tracking-tighter leading-[0.9]">
+              Architecture <br />
+              <span className="text-transparent text-outline">Modules</span>
+            </h2>
+          </MouseParallax>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 border-t-2 border-primary/10 pt-12">
-          {/* Services List */}
-          <div className="lg:col-span-7 flex flex-col">
-            {services.map((service, index) => (
-              <motion.div 
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-100px" }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                onMouseEnter={() => setHoveredIndex(index)}
-                className={cn(
-                  "group py-8 flex flex-col md:flex-row justify-between md:items-center gap-8 cursor-pointer border-b border-border transition-all duration-300",
-                  hoveredIndex === index ? "text-primary" : "text-foreground"
-                )}
-              >
-                <h3 className="text-2xl font-heading font-bold w-full md:w-1/2 transition-transform duration-500 group-hover:translate-x-4">
-                  {service.title}
-                </h3>
-                <p className="w-full md:w-1/2 text-base md:text-lg text-muted-foreground group-hover:text-foreground transition-colors">
-                  {service.description}
-                </p>
-                <div className="hidden md:flex justify-end ml-4">
-                  <div className={cn(
-                    "w-12 h-12 rounded-full flex items-center justify-center transition-all duration-500",
-                    hoveredIndex === index ? "bg-primary text-primary-foreground shadow-md" : "bg-muted text-muted-foreground"
-                  )}>
-                    <ArrowUpRight size={20} className={cn("transition-transform duration-500", hoveredIndex === index && "rotate-45")} />
+        {/* Right: Floating Panels Container */}
+        <div ref={panelsRef} className="w-full md:w-2/3 h-[60vh] relative perspective-[1000px]">
+          {services.map((service, index) => (
+            <div 
+              key={index} 
+              className="service-panel absolute inset-0 w-full h-full flex items-center justify-center"
+            >
+              <MouseParallax strength={0.04} className="w-full h-full flex items-center justify-center">
+                <div className="glass-panel w-full max-w-lg p-10 md:p-14 rounded-3xl flex flex-col gap-8 shadow-2xl border border-white/60 dark:border-white/10 relative overflow-hidden group">
+                  
+                  {/* Decorative Blueprint Line inside panel */}
+                  <div className="absolute top-0 right-10 w-[1px] h-full bg-primary/20"></div>
+                  
+                  <div className="text-[8vw] sm:text-[5vw] font-black leading-none text-primary/10 absolute top-4 right-8 select-none pointer-events-none">
+                    {service.number}
+                  </div>
+                  
+                  <div>
+                    <h3 className="text-3xl md:text-4xl font-black uppercase mb-4 leading-none tracking-tight text-foreground">
+                      {service.title}
+                    </h3>
+                    <p className="text-base md:text-lg text-muted-foreground leading-relaxed font-sans max-w-sm">
+                      {service.description}
+                    </p>
+                  </div>
+                  
+                  <div className="mt-8 flex items-center gap-4 group-hover:gap-6 transition-all duration-300">
+                    <div className="w-8 h-[1px] bg-primary"></div>
+                    <span className="text-xs font-bold uppercase tracking-widest text-primary cursor-interactive">
+                      Initialize
+                    </span>
                   </div>
                 </div>
-              </motion.div>
-            ))}
-          </div>
-
-          {/* Hover Image Reveal */}
-          <div className="hidden lg:block lg:col-span-5 relative">
-            <div className="sticky top-32 w-full aspect-[4/5] overflow-hidden rounded-3xl shadow-xl shadow-primary/5">
-              <AnimatePresence mode="wait">
-                {hoveredIndex !== null && (
-                  <motion.img
-                    key={hoveredIndex}
-                    src={services[hoveredIndex].image}
-                    initial={{ opacity: 0, scale: 1.1 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.5, ease: "easeInOut" }}
-                    className="absolute inset-0 w-full h-full object-cover"
-                    alt="Service visual"
-                  />
-                )}
-              </AnimatePresence>
+              </MouseParallax>
             </div>
-          </div>
+          ))}
         </div>
+
       </div>
     </section>
-  )
+  );
 }

@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Menu, X } from 'lucide-react'
 import { cn } from '@/lib/utils'
@@ -35,11 +36,15 @@ export function Navbar() {
       )}
     >
       <div className="container flex items-center justify-between">
-        <Link href="/" className="relative z-50 flex items-center gap-2 text-3xl font-bold font-heading tracking-tight text-primary">
-          <div className="w-8 h-8 bg-primary text-primary-foreground flex items-center justify-center rounded-sm font-black text-xl mb-1">
-            Δ
-          </div>
-          AFFOBE
+        <Link href="/" className="relative z-50 flex items-center">
+          <Image 
+            src="/logo.jpg" 
+            alt="AFFOBE Logo" 
+            width={240} 
+            height={72} 
+            className="h-16 w-auto object-contain rounded-xl overflow-hidden shadow-sm"
+            priority 
+          />
         </Link>
 
         {/* Desktop Nav */}
