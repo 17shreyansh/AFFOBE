@@ -17,6 +17,21 @@ const clients = [
   { name: "Apex Labs", sector: "Research" }
 ];
 
+const ClientCard = ({ client }: { client: { name: string; sector: string } }) => (
+  <div className="group relative w-[200px] md:w-[280px] h-[150px] md:h-[210px] shrink-0 border border-border flex flex-col items-center justify-center p-6 mx-3 cursor-interactive bg-background transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:border-primary/30">
+    {/* Hover Top Line */}
+    <div className="absolute top-0 left-0 w-full h-[2px] bg-primary scale-x-0 origin-left group-hover:scale-x-100 transition-transform duration-500"></div>
+    
+    {/* Content */}
+    <span className="text-lg md:text-xl font-black tracking-tight text-foreground/80 group-hover:text-primary transition-colors duration-300 mb-2 text-center">
+      {client.name}
+    </span>
+    <span className="text-[10px] uppercase tracking-widest font-mono text-muted-foreground group-hover:text-foreground/70 transition-colors duration-300 text-center">
+      {client.sector}
+    </span>
+  </div>
+);
+
 export function Clients() {
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -24,14 +39,13 @@ export function Clients() {
     if (!containerRef.current) return;
 
     const ctx = gsap.context(() => {
-      // Staggered reveal for the client cells
-      gsap.fromTo(".client-cell",
+      // Fade in the marquee container
+      gsap.fromTo(".marquee-container",
         { opacity: 0, y: 20 },
         {
           opacity: 1,
           y: 0,
-          duration: 0.8,
-          stagger: 0.1,
+          duration: 1,
           ease: "power2.out",
           scrollTrigger: {
             trigger: containerRef.current,
@@ -67,29 +81,23 @@ export function Clients() {
           </p>
         </div>
         
-        {/* Architectural Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-4 border-t border-l border-border relative">
-          {clients.map((client, index) => (
-            <div 
-              key={index} 
-              className="client-cell group relative aspect-[4/3] border-b border-r border-border flex flex-col items-center justify-center p-8 overflow-hidden cursor-interactive bg-background"
-            >
-              {/* Hover effect background */}
-              <div className="absolute inset-0 bg-gradient-to-b from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-              
-              {/* Hover Top Line */}
-              <div className="absolute top-0 left-0 w-full h-[2px] bg-primary scale-x-0 origin-left group-hover:scale-x-100 transition-transform duration-500"></div>
-              
-              {/* Content */}
-              <span className="text-xl md:text-2xl font-black tracking-tight text-foreground/80 group-hover:text-primary transition-colors duration-300 mb-2">
-                {client.name}
-              </span>
-              <span className="text-[10px] uppercase tracking-widest font-mono text-muted-foreground group-hover:text-foreground/70 transition-colors duration-300">
-                {client.sector}
-              </span>
-              
-            </div>
-          ))}
+        {/* Marquee Showcase */}
+        <div className="marquee-container w-full overflow-hidden border-y border-border py-8 flex flex-col gap-6 relative">
+          
+          {/* Row 1: Scrolling Left */}
+          <div className="flex w-max animate-marquee hover:[animation-play-state:paused]">
+            {[...clients, ...clients].map((client, index) => (
+              <ClientCard key={`row1-${index}`} client={client} />
+            ))}
+          </div>
+
+          {/* Row 2: Scrolling Right */}
+          <div className="flex w-max animate-marquee-reverse hover:[animation-play-state:paused]">
+            {[...[...clients].reverse(), ...[...clients].reverse()].map((client, index) => (
+              <ClientCard key={`row2-${index}`} client={client} />
+            ))}
+          </div>
+
         </div>
 
       </div>
