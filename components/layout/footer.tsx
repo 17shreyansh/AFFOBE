@@ -7,12 +7,12 @@ import { Button } from '@/components/ui/button'
 
 export function Footer() {
   return (
-    <footer className="bg-foreground text-background pt-24 pb-12 rounded-t-[3rem] mt-24">
+    <footer className="bg-primary text-primary-foreground pt-24 pb-12 rounded-t-[3rem] mt-24">
       <div className="container">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-20">
           <div className="lg:col-span-2">
-            <h2 className="text-fluid-3xl font-heading font-bold leading-tight mb-8">
-              Let's build something <br/> extraordinary.
+            <h2 className="text-3xl md:text-5xl font-heading font-bold leading-tight mb-8">
+              Let's build the future of <br/> your digital business.
             </h2>
             <div className="flex gap-4">
               <input 
@@ -54,7 +54,7 @@ export function Footer() {
         </div>
 
         <div className="border-t border-background/20 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-background/60">
-          <p>© 2026 AGENCY. All rights reserved.</p>
+          <p>© 2026 AFFOBE. All rights reserved.</p>
           <div className="flex gap-6">
             <Link href="/privacy" className="hover:text-background transition-colors">Privacy Policy</Link>
             <Link href="/terms" className="hover:text-background transition-colors">Terms of Service</Link>

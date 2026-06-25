@@ -5,6 +5,9 @@ import { About } from '@/components/sections/about'
 import { Services } from '@/components/sections/services'
 import { FeaturedWork } from '@/components/sections/featured-work'
 import { Clients } from '@/components/sections/clients'
+import { Team } from '@/components/sections/team'
+import { Gallery } from '@/components/sections/gallery'
+import { BlogPreview } from '@/components/sections/blog-preview'
 import { FAQ } from '@/components/sections/faq'
 import { CTA } from '@/components/sections/cta'
 
@@ -14,10 +17,13 @@ export default function Home() {
       <Navbar />
       
       <Hero />
+      <Clients />
       <About />
       <Services />
       <FeaturedWork />
-      <Clients />
+      <Team />
+      <Gallery />
+      <BlogPreview />
       <FAQ />
       <CTA />
       

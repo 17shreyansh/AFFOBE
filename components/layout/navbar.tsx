@@ -35,8 +35,11 @@ export function Navbar() {
       )}
     >
       <div className="container flex items-center justify-between">
-        <Link href="/" className="relative z-50 text-2xl font-bold font-heading tracking-tighter">
-          AGENCY<span className="text-primary">.</span>
+        <Link href="/" className="relative z-50 flex items-center gap-2 text-3xl font-bold font-heading tracking-tight text-primary">
+          <div className="w-8 h-8 bg-primary text-primary-foreground flex items-center justify-center rounded-sm font-black text-xl mb-1">
+            Δ
+          </div>
+          AFFOBE
         </Link>
 
         {/* Desktop Nav */}
@@ -45,17 +48,15 @@ export function Navbar() {
             <Link
               key={link.name}
               href={link.href}
-              className="text-sm font-medium hover:text-primary transition-colors relative group"
+              className="text-sm font-semibold hover:text-primary transition-colors relative group"
             >
               {link.name}
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full" />
             </Link>
           ))}
-          <MagneticButton>
-            <Button variant="premium" className="rounded-full">
-              Start Project
-            </Button>
-          </MagneticButton>
+          <Button className="rounded-full px-6 bg-primary text-primary-foreground hover:bg-primary/90 font-semibold shadow-md">
+            Get in Touch
+          </Button>
         </nav>
 
         {/* Mobile Nav Toggle */}
