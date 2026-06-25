@@ -37,7 +37,7 @@ export function Services() {
   useEffect(() => {
     if (!containerRef.current || !panelsRef.current) return;
 
-    const panels = gsap.utils.toArray(".service-panel");
+    const panels = gsap.utils.toArray(".service-panel") as HTMLElement[];
     
     const ctx = gsap.context(() => {
       // Create a pinned timeline for overlapping panels

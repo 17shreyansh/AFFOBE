@@ -7,7 +7,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
 
 interface ScrollParallaxProps {
-  children: React.ReactNode;
+  children?: React.ReactNode;
   speed?: number; // < 1 means slower than scroll, > 1 means faster
   className?: string;
 }
@@ -50,7 +50,7 @@ export function ScrollParallax({ children, speed = 0.5, className = "" }: Scroll
 }
 
 interface MouseParallaxProps {
-  children: React.ReactNode;
+  children?: React.ReactNode;
   strength?: number;
   className?: string;
 }
