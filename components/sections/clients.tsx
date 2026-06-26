@@ -77,7 +77,7 @@ export function Clients() {
             </h2>
           </div>
           <p className="text-muted-foreground font-mono text-sm max-w-sm">
-            We build digital infrastructure for the world's most ambitious companies.
+            We build digital infrastructure for the world&apos;s most ambitious companies.
           </p>
         </div>
         

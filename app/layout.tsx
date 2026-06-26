@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Inter, Outfit } from "next/font/google";
-import { ThemeProvider } from "@/components/providers/theme-provider";
 import { LenisProvider } from "@/components/providers/lenis-provider";
 import { CustomCursor } from "@/components/animations/custom-cursor";
 import { NoiseBackground } from "@/components/animations/noise-background";
@@ -32,18 +31,11 @@ export default function RootLayout({
         suppressHydrationWarning
         className={`${inter.variable} ${outfit.variable} font-sans antialiased bg-background text-foreground selection:bg-primary selection:text-primary-foreground min-h-screen cursor-none`}
       >
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="light"
-          enableSystem={false}
-          disableTransitionOnChange
-        >
           <LenisProvider>
             <CustomCursor />
             <NoiseBackground />
             {children}
           </LenisProvider>
-        </ThemeProvider>
       </body>
     </html>
   );
