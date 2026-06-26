@@ -122,13 +122,6 @@ export function Hero() {
         </div>
       </div>
 
-      <style jsx global>{`
-        @keyframes scroll-down {
-          0% { transform: translateY(-100%); opacity: 0; }
-          50% { opacity: 1; }
-          100% { transform: translateY(300%); opacity: 0; }
-        }
-      `}</style>
     </section>
   );
 }

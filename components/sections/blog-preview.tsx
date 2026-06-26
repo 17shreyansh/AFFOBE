@@ -3,7 +3,8 @@
 import React from 'react'
 import { motion } from 'framer-motion'
 import { ArrowRight, Calendar } from 'lucide-react'
-import { Button } from '@/components/ui/button'
+import Link from 'next/link'
+import { MouseParallax, ScrollParallax } from '@/components/animations/parallax'
 
 const posts = [
   {
@@ -31,56 +32,89 @@ const posts = [
 
 export function BlogPreview() {
   return (
-    <section className="py-32 bg-secondary/30">
-      <div className="container">
-        <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
-          <div>
-            <h2 className="text-3xl md:text-5xl font-heading font-bold mb-4 text-foreground">
-              Industry Insights
-            </h2>
-            <p className="text-lg text-muted-foreground max-w-xl">
-              Expert perspectives on performance engineering, fintech innovation, and digital transformation.
+    <section className="py-24 md:py-32 overflow-hidden bg-background relative border-t border-border">
+      {/* Background blueprint details */}
+      <div className="absolute inset-0 pointer-events-none opacity-20">
+        <div className="absolute left-1/4 top-0 w-[1px] h-full bg-primary/30"></div>
+        <div className="absolute right-1/4 top-0 w-[1px] h-full bg-primary/30"></div>
+        <ScrollParallax speed={0.1} className="absolute inset-0 blueprint-grid"></ScrollParallax>
+      </div>
+
+      <div className="container relative z-10">
+        <div className="flex flex-col items-center text-center mb-16 md:mb-24">
+          <MouseParallax strength={0.02}>
+            <p className="text-xs uppercase tracking-widest font-mono text-primary mb-6">
+              [ Intelligence ]
             </p>
+            <h2 className="text-[10vw] sm:text-[6vw] font-black uppercase text-foreground tracking-tighter leading-none mb-8">
+              Industry <span className="text-transparent text-outline">Insights</span>
+            </h2>
+          </MouseParallax>
+          
+          <div className="glass-panel p-6 rounded-2xl max-w-2xl w-full border-t-4 border-t-primary flex flex-col md:flex-row gap-8 justify-between text-left mt-8">
+            <p className="font-mono text-sm text-muted-foreground flex-1">
+              <span className="text-primary">{`>`}</span> ANALYZING MARKET TRENDS...<br/>
+              <span className="text-primary">{`>`}</span> DECODING DIGITAL STRATEGY...
+            </p>
+            <Link 
+              href="/insights"
+              className="group flex items-center justify-center gap-2 font-mono text-sm uppercase text-primary border border-primary/30 px-6 py-3 rounded-full hover:bg-primary hover:text-white transition-all duration-300 flex-1 md:flex-none"
+            >
+              Access Archive <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+            </Link>
           </div>
-          <Button variant="outline" className="rounded-full border-primary/20 text-primary hover:bg-primary hover:text-white">
-            View All Articles <ArrowRight size={16} className="ml-2" />
-          </Button>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-w-5xl mx-auto">
           {posts.map((post, index) => (
             <motion.article 
               key={index}
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="group bg-card rounded-2xl overflow-hidden border border-border shadow-sm hover:shadow-xl hover:shadow-primary/5 transition-all duration-300 flex flex-col"
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 0.6, delay: index * 0.15, ease: [0.22, 1, 0.36, 1] }}
+              className="group relative flex flex-col cursor-interactive"
             >
-              <div className="relative overflow-hidden aspect-[16/10]">
-                <img 
-                  src={post.image} 
-                  alt={post.title}
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                />
-                <div className="absolute top-4 left-4 bg-background/90 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-bold text-primary tracking-wide uppercase">
-                  {post.category}
+              <div className="glass-panel rounded-3xl overflow-hidden border border-primary/20 hover:border-primary/50 hover:shadow-[0_0_40px_rgba(37,99,235,0.15)] transition-all duration-500 flex flex-col h-full">
+                
+                {/* Image Container */}
+                <div className="relative overflow-hidden aspect-[16/9] w-full p-2">
+                  <div className="relative w-full h-full rounded-2xl overflow-hidden">
+                    <div className="absolute inset-0 bg-primary/20 group-hover:bg-transparent transition-colors duration-500 z-10 pointer-events-none"></div>
+                    <img 
+                      src={post.image} 
+                      alt={post.title}
+                      className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-all duration-700 ease-out group-hover:scale-105"
+                    />
+                    
+                    {/* Category Tag */}
+                    <div className="absolute top-4 left-4 z-20 bg-background/80 backdrop-blur-md border border-primary/20 px-4 py-1.5 rounded-full text-[10px] font-mono font-bold text-primary tracking-widest uppercase">
+                      {post.category}
+                    </div>
+                  </div>
                 </div>
-              </div>
-              <div className="p-8 flex flex-col flex-grow">
-                <div className="flex items-center gap-2 text-muted-foreground text-sm mb-4">
-                  <Calendar size={14} />
-                  <span>{post.date}</span>
+
+                {/* Content */}
+                <div className="p-4 flex flex-col flex-grow">
+                  <div className="flex items-center gap-2 font-mono text-primary/70 text-[10px] tracking-wider mb-2">
+                    <Calendar size={12} className="text-primary" />
+                    <span>[ {post.date} ]</span>
+                  </div>
+                  
+                  <h3 className="text-base md:text-lg font-black uppercase tracking-tight leading-tight mb-2 text-foreground group-hover:text-primary transition-colors duration-300 line-clamp-2">
+                    {post.title}
+                  </h3>
+                  
+                  <p className="text-muted-foreground text-xs leading-relaxed mb-4 flex-grow line-clamp-3">
+                    {post.excerpt}
+                  </p>
+                  
+                  <div className="flex items-center text-primary font-mono text-xs font-bold tracking-widest uppercase mt-auto group-hover:gap-3 transition-all duration-300">
+                    <span className="border-b border-transparent group-hover:border-primary pb-0.5 transition-colors duration-300">Read Record</span> 
+                    <ArrowRight size={14} className="ml-1 opacity-50 group-hover:opacity-100 transition-opacity" />
+                  </div>
                 </div>
-                <h3 className="text-xl font-bold font-heading mb-4 text-foreground group-hover:text-primary transition-colors">
-                  {post.title}
-                </h3>
-                <p className="text-muted-foreground mb-8 flex-grow">
-                  {post.excerpt}
-                </p>
-                <div className="flex items-center text-primary font-semibold text-sm mt-auto group-hover:gap-2 transition-all">
-                  Read Article <ArrowRight size={16} className="ml-1 opacity-0 group-hover:opacity-100 transition-opacity" />
-                </div>
+                
               </div>
             </motion.article>
           ))}

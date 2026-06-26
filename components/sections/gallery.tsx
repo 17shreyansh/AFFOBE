@@ -23,6 +23,11 @@ export function Gallery() {
   const containerRef = useRef<HTMLElement>(null);
   const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
   const isHoveredRef = useRef(false);
+  const isDraggingRef = useRef(false);
+  const lastXRef = useRef(0);
+  const rotationRef = useRef(0);
+  const velocityRef = useRef(0);
+  const lastTimeRef = useRef(0);
   const [radii, setRadii] = useState({ x: 0, z: 0 });
 
   useEffect(() => {
@@ -44,20 +49,25 @@ export function Gallery() {
     if (radii.x === 0) return; // Wait for initialization
 
     let animationFrameId: number;
-    let rotation = 0;
-    // Speed: negative makes it rotate right to left
-    const speed = -0.0025; 
+    // Base Speed: negative makes it rotate right to left
+    const baseSpeed = -0.0025; 
 
     const render = () => {
-      if (!isHoveredRef.current) {
-        rotation += speed;
+      if (!isDraggingRef.current) {
+        const targetSpeed = isHoveredRef.current ? 0 : baseSpeed;
+        
+        // Smoothly interpolate current velocity towards target speed (friction/deceleration)
+        // If user flicked it, velocityRef.current will be high and gradually decay to baseSpeed
+        velocityRef.current += (targetSpeed - velocityRef.current) * 0.05;
+        
+        rotationRef.current += velocityRef.current;
       }
 
       cardsRef.current.forEach((card, i) => {
         if (!card) return;
 
         // Calculate current angle for this specific card
-        const angle = (i / allImages.length) * Math.PI * 2 + rotation;
+        const angle = (i / allImages.length) * Math.PI * 2 + rotationRef.current;
         
         // Elliptical path math
         const x = Math.sin(angle) * radii.x;
@@ -86,6 +96,40 @@ export function Gallery() {
 
     return () => cancelAnimationFrame(animationFrameId);
   }, [radii]);
+
+  const handlePointerDown = (e: React.MouseEvent | React.TouchEvent) => {
+    isDraggingRef.current = true;
+    const clientX = 'touches' in e ? e.touches[0].clientX : (e as React.MouseEvent).clientX;
+    lastXRef.current = clientX;
+    lastTimeRef.current = performance.now();
+    velocityRef.current = 0; // Reset velocity on fresh grab
+  };
+
+  const handlePointerMove = (e: React.MouseEvent | React.TouchEvent) => {
+    if (!isDraggingRef.current) return;
+    const clientX = 'touches' in e ? e.touches[0].clientX : (e as React.MouseEvent).clientX;
+    const now = performance.now();
+    const dt = Math.max(1, now - lastTimeRef.current);
+    
+    const deltaX = clientX - lastXRef.current;
+    
+    // 1:1 mapping speed adjustment
+    const rotationDelta = (deltaX / window.innerWidth) * Math.PI * 2.5; 
+    
+    rotationRef.current += rotationDelta;
+    
+    // Calculate instantaneous velocity in radians per frame (~16.66ms)
+    const currentVelocity = (rotationDelta / dt) * 16.66;
+    // Smooth the velocity to prevent erratic flick values
+    velocityRef.current = velocityRef.current * 0.2 + currentVelocity * 0.8;
+    
+    lastXRef.current = clientX;
+    lastTimeRef.current = now;
+  };
+
+  const handlePointerUp = () => {
+    isDraggingRef.current = false;
+  };
 
   return (
     <section ref={containerRef} className="py-24 md:py-32 overflow-hidden bg-background border-t border-border relative">
@@ -122,10 +166,19 @@ export function Gallery() {
 
         {/* Premium 3D Infinite Circular Gallery */}
         <div 
-          className="relative w-full h-[50vh] md:h-[60vh] flex items-center justify-center"
-          style={{ perspective: '1200px', transformStyle: 'preserve-3d' }}
+          className="relative w-full h-[50vh] md:h-[60vh] flex items-center justify-center cursor-grab active:cursor-grabbing"
+          style={{ perspective: '1200px', transformStyle: 'preserve-3d', userSelect: 'none', touchAction: 'pan-y' }}
           onMouseEnter={() => isHoveredRef.current = true}
-          onMouseLeave={() => isHoveredRef.current = false}
+          onMouseLeave={() => {
+            isHoveredRef.current = false;
+            isDraggingRef.current = false;
+          }}
+          onMouseDown={handlePointerDown}
+          onMouseMove={handlePointerMove}
+          onMouseUp={handlePointerUp}
+          onTouchStart={handlePointerDown}
+          onTouchMove={handlePointerMove}
+          onTouchEnd={handlePointerUp}
         >
           {radii.x > 0 && allImages.map((item, i) => (
             <div 
