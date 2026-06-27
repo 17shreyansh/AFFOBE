@@ -8,6 +8,7 @@ import { Clients } from '@/components/sections/clients'
 import { Team } from '@/components/sections/team'
 import { Gallery } from '@/components/sections/gallery'
 import { BlogPreview } from '@/components/sections/blog-preview'
+import { Testimonials } from '@/components/sections/testimonials'
 import { FAQ } from '@/components/sections/faq'
 import { CTA } from '@/components/sections/cta'
 
@@ -26,6 +27,7 @@ export default function Home() {
       <BlogPreview />
       <FAQ />
       <CTA />
+      <Testimonials />
       
       <Footer />
     </main>
