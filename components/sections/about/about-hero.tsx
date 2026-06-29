@@ -66,7 +66,7 @@ export function AboutHero() {
           className="mb-10"
         >
           <span className="text-primary tracking-[0.3em] uppercase text-sm font-semibold border border-primary/30 px-6 py-2 rounded-full">
-            Our Story
+            About Us
           </span>
         </motion.div>
 
@@ -76,9 +76,9 @@ export function AboutHero() {
           animate="visible"
           className="text-5xl md:text-7xl lg:text-[8rem] font-heading font-black text-white leading-[0.9] tracking-tighter uppercase max-w-5xl mx-auto"
         >
-          <motion.span variants={itemVariants} className="block">Digital</motion.span>
-          <motion.span variants={itemVariants} className="block text-transparent text-outline" style={{ WebkitTextStroke: '1px rgba(255,255,255,0.5)' }}>Excellence</motion.span>
-          <motion.span variants={itemVariants} className="block">Redefined.</motion.span>
+          <motion.span variants={itemVariants} className="block">Designing</motion.span>
+          <motion.span variants={itemVariants} className="block text-transparent text-outline" style={{ WebkitTextStroke: '1px rgba(255,255,255,0.5)' }}>Powerful</motion.span>
+          <motion.span variants={itemVariants} className="block">Solutions.</motion.span>
         </motion.h1>
 
         <motion.p 
@@ -98,7 +98,6 @@ export function AboutHero() {
         transition={{ duration: 1, delay: 1.5 }}
         className="absolute bottom-12 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center"
       >
-        <span className="text-xs tracking-[0.2em] text-gray-400 uppercase mb-4 font-medium">Scroll to explore</span>
         <motion.div 
           animate={{ y: [0, 10, 0] }}
           transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}

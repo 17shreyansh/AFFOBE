@@ -2,52 +2,51 @@
 
 import React from 'react'
 import { motion } from 'framer-motion'
-import { Target, Eye, ArrowUpRight } from 'lucide-react'
 
 export function MissionVision() {
-  const cards = [
-    {
-      title: "Our Mission",
-      icon: <Target className="w-8 h-8 text-white transition-transform duration-500 group-hover:scale-110" />,
-      description: "To build great websites that help businesses grow and succeed online, mixing good tech with beautiful design."
-    },
-    {
-      title: "Our Vision",
-      icon: <Eye className="w-8 h-8 text-white transition-transform duration-500 group-hover:scale-110" />,
-      description: "To be known worldwide as a top digital agency that delivers high-quality work, solves hard problems, and creates amazing designs."
-    }
-  ]
-
   return (
-    <section className="py-32 bg-black border-y border-white/10">
+    <section className="py-32 bg-background border-y border-primary/10">
       <div className="container max-w-7xl">
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-0">
-          {cards.map((card, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 1, delay: index * 0.2, ease: [0.16, 1, 0.3, 1] }}
-              className={`group relative p-10 lg:p-16 flex flex-col justify-between min-h-[400px] border border-white/5 bg-zinc-950/50 hover:bg-white transition-colors duration-700 ${index === 0 ? 'lg:border-r' : ''}`}
-            >
-              <div className="flex justify-between items-start mb-12">
-                <div className="w-16 h-16 rounded-full bg-black border border-white/10 flex items-center justify-center group-hover:bg-black group-hover:border-black transition-colors duration-500">
-                  {card.icon}
-                </div>
-                <ArrowUpRight className="w-8 h-8 text-white/20 group-hover:text-black transition-colors duration-500" />
-              </div>
-              
-              <div>
-                <h3 className="text-4xl lg:text-5xl font-heading font-black mb-6 text-white group-hover:text-black transition-colors duration-500 tracking-tight">
-                  {card.title}
-                </h3>
-                <p className="text-xl text-gray-400 group-hover:text-gray-600 transition-colors duration-500 leading-relaxed font-light">
-                  {card.description}
-                </p>
-              </div>
-            </motion.div>
-          ))}
+        <div className="grid md:grid-cols-2 gap-16 md:gap-32">
+          
+          {/* Mission */}
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            className="flex flex-col"
+          >
+            <h2 className="text-primary font-bold tracking-[0.2em] uppercase text-xs mb-6">
+              Our Mission
+            </h2>
+            <h3 className="text-4xl lg:text-5xl font-heading font-black text-foreground tracking-tight mb-8 leading-[1.1]">
+              Building digital <br className="hidden lg:block" /> excellence.
+            </h3>
+            <p className="text-muted-foreground text-lg leading-relaxed font-light">
+              To build great websites that help businesses grow and succeed online, mixing good tech with beautiful, clean design. We believe in simplicity, performance, and delivering actual value.
+            </p>
+          </motion.div>
+
+          {/* Vision */}
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+            className="flex flex-col"
+          >
+            <h2 className="text-primary font-bold tracking-[0.2em] uppercase text-xs mb-6">
+              Our Vision
+            </h2>
+            <h3 className="text-4xl lg:text-5xl font-heading font-black text-foreground tracking-tight mb-8 leading-[1.1]">
+              Global standard <br className="hidden lg:block" /> for design.
+            </h3>
+            <p className="text-muted-foreground text-lg leading-relaxed font-light">
+              To be known worldwide as a top digital agency that delivers high-quality work, solves hard problems, and creates amazing, highly usable designs without the unnecessary clutter.
+            </p>
+          </motion.div>
+
         </div>
       </div>
     </section>

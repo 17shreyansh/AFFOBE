@@ -19,9 +19,9 @@ export const metadata = {
 export default function AboutPage() {
   return (
     <main className="min-h-screen bg-background text-foreground selection:bg-primary/20">
-      <Navbar />
+      <Navbar alwaysSolid={true} />
       
-      <div className="pt-24 lg:pt-32">
+      <div className="w-full">
         <AboutHero />
         <CompanyStory />
         <MissionVision />

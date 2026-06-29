@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useEffect, useState, useRef } from 'react'
+import React, { useRef, useEffect } from 'react'
 import { motion, useInView, useSpring, useTransform } from 'framer-motion'
 
 function AnimatedCounter({ value, duration = 2.5 }: { value: number, duration?: number }) {
@@ -10,8 +10,6 @@ function AnimatedCounter({ value, duration = 2.5 }: { value: number, duration?: 
   const springValue = useSpring(0, {
     duration: duration * 1000,
     bounce: 0,
-    damping: 20,
-    stiffness: 50
   })
   
   const displayValue = useTransform(springValue, (current) => Math.floor(current))
@@ -34,23 +32,43 @@ export function CompanyStats() {
   ]
 
   return (
-    <section className="py-32 bg-black border-y border-white/10 relative overflow-hidden">
-      <div className="container relative z-10 max-w-7xl">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-0 border-t border-l border-white/10">
+    <section className="py-32 bg-background border-b border-primary/10">
+      <div className="container max-w-7xl">
+        <div className="mb-20">
+          <motion.h2 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-primary font-bold tracking-[0.2em] uppercase text-xs mb-6"
+          >
+            By The Numbers
+          </motion.h2>
+          <motion.h3
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.1 }}
+            className="text-4xl md:text-5xl lg:text-6xl font-heading font-black text-foreground tracking-tighter leading-[1.1]"
+          >
+            Our Global Impact
+          </motion.h3>
+        </div>
+
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-16 lg:gap-8">
           {stats.map((stat, index) => (
             <motion.div
               key={index}
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 1, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] }}
-              className="text-center p-12 border-b border-r border-white/10 hover:bg-white/5 transition-colors duration-500 flex flex-col justify-center items-center group"
+              transition={{ duration: 0.8, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] }}
+              className="flex flex-col"
             >
-              <div className="text-6xl md:text-7xl lg:text-8xl font-heading font-black mb-4 flex justify-center items-center text-white tracking-tighter">
+              <div className="text-5xl md:text-6xl lg:text-7xl font-heading font-black tracking-tighter text-foreground mb-4 flex items-start">
                 <AnimatedCounter value={stat.value} />
-                <span className="text-primary">{stat.suffix}</span>
+                <span className="text-primary text-3xl md:text-4xl lg:text-5xl mt-2 ml-1">{stat.suffix}</span>
               </div>
-              <p className="text-gray-400 font-medium text-xs md:text-sm uppercase tracking-[0.2em] group-hover:text-white transition-colors duration-500">
+              <p className="text-muted-foreground font-medium text-sm md:text-base uppercase tracking-[0.2em]">
                 {stat.label}
               </p>
             </motion.div>

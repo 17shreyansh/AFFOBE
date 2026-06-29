@@ -1,96 +1,91 @@
 "use client"
 
-import React, { useRef } from 'react'
-import { motion, useScroll, useTransform } from 'framer-motion'
+import React from 'react'
+import { motion } from 'framer-motion'
 
 export function OurJourney() {
-  const containerRef = useRef<HTMLDivElement>(null)
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start center", "end center"]
-  })
-
-  // Animate the line drawing down/across
-  const lineWidth = useTransform(scrollYProgress, [0, 1], ["0%", "100%"])
-  const lineHeight = useTransform(scrollYProgress, [0, 1], ["0%", "100%"])
-
-  const [mounted, setMounted] = React.useState(false)
-  React.useEffect(() => {
-    setMounted(true)
-  }, [])
-
-  const milestones = [
-    { year: "2018", title: "The Beginning", desc: "Started as a small design shop with a team of 3 people." },
-    { year: "2020", title: "Growing Up", desc: "Added coding to our services to build complete websites." },
-    { year: "2022", title: "Going Global", desc: "Opened our second office and started working with big companies worldwide." },
-    { year: "2024", title: "Leading the Way", desc: "Known as a top digital agency that makes great web experiences." }
+  const journeySteps = [
+    {
+      year: "2012",
+      title: "The Beginning",
+      desc: "Founded in a small garage with a vision to revolutionize digital experiences for local businesses. Just three developers and a lot of coffee."
+    },
+    {
+      year: "2015",
+      title: "First Major Milestone",
+      desc: "Landed our first Fortune 500 client, expanding our team to 20 people and moving into our first official downtown office."
+    },
+    {
+      year: "2018",
+      title: "Going Global",
+      desc: "Opened our second office in London, officially becoming a global agency. Began specializing in large-scale enterprise web applications."
+    },
+    {
+      year: "2021",
+      title: "Design Excellence",
+      desc: "Won three consecutive Awwwards for our minimalist, high-performance web designs, establishing our signature aesthetic."
+    },
+    {
+      year: "2024",
+      title: "The Future",
+      desc: "Leading the industry in AI-integrated web platforms and premium digital experiences. Over 400 successful projects delivered worldwide."
+    }
   ]
 
   return (
-    <section ref={containerRef} className="py-32 bg-black border-y border-white/10 relative overflow-hidden">
-      <div className="container relative z-10 max-w-7xl">
-        <div className="text-center mb-32">
-          <motion.div
+    <section className="py-32 bg-background border-b border-primary/10">
+      <div className="container max-w-5xl mx-auto">
+        <div className="text-center mb-24">
+          <motion.h2 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="inline-flex items-center gap-3 px-6 py-2 rounded-full border border-white/20 text-white text-xs font-medium uppercase tracking-[0.2em] mb-8"
+            className="text-primary font-bold tracking-[0.2em] uppercase text-xs mb-6"
           >
             Our Journey
-          </motion.div>
-          <motion.h3 
+          </motion.h2>
+          <motion.h3
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="text-4xl md:text-5xl lg:text-7xl font-heading font-black text-white tracking-tighter"
+            className="text-4xl md:text-5xl lg:text-6xl font-heading font-black text-foreground tracking-tighter leading-[1.1]"
           >
-            How we <span className="text-gray-600">grew.</span>
+            A timeline of <br /> our progress.
           </motion.h3>
         </div>
 
-        <div className="relative max-w-6xl mx-auto">
-          {/* Base Track */}
-          <div className="absolute top-0 md:top-[42px] left-[13px] md:left-0 w-[1px] md:w-full h-full md:h-[1px] bg-white/10 -translate-x-1/2 md:translate-x-0 md:-translate-y-1/2">
-            {/* Animated Fill */}
-            {mounted && (
-              <motion.div 
-                className="absolute top-0 left-0 bg-white"
-                style={{ 
-                  width: window.innerWidth >= 768 ? lineWidth : '100%',
-                  height: window.innerWidth < 768 ? lineHeight : '100%'
-                }}
-              />
-            )}
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-12 md:gap-8 relative">
-            {milestones.map((milestone, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-100px" }}
-                transition={{ duration: 1, delay: index * 0.2, ease: [0.16, 1, 0.3, 1] }}
-                className="relative pl-12 md:pl-0 pt-0 md:pt-20 group"
-              >
-                {/* Node */}
-                <div className="absolute top-0 md:top-auto md:-top-[50px] left-[13px] md:left-1/2 w-4 h-4 rounded-full bg-black border-[2px] border-white z-10 -translate-x-1/2 md:mt-20 group-hover:scale-150 group-hover:bg-white transition-all duration-500" />
-                
-                <div className="md:text-center p-2 transition-all duration-300">
-                  <h4 className="text-3xl md:text-5xl font-heading font-black text-white/20 group-hover:text-white transition-colors duration-500 mb-4 tracking-tighter">
-                    {milestone.year}
+        <div className="relative border-l border-primary/20 ml-4 md:ml-12 pl-8 md:pl-16 space-y-24">
+          {journeySteps.map((step, index) => (
+            <motion.div 
+              key={index}
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+              className="relative"
+            >
+              {/* Timeline dot */}
+              <div className="absolute w-4 h-4 rounded-full bg-primary -left-[39px] md:-left-[71px] top-2 shadow-[0_0_0_8px_hsl(var(--background))]" />
+              
+              <div className="flex flex-col md:flex-row md:items-baseline gap-4 md:gap-16">
+                <div className="md:w-32 shrink-0">
+                  <h4 className="text-3xl md:text-4xl font-heading font-black text-primary tracking-tighter">
+                    {step.year}
                   </h4>
-                  <h5 className="text-xl font-bold text-white mb-4">
-                    {milestone.title}
+                </div>
+                
+                <div className="flex-1">
+                  <h5 className="text-2xl md:text-3xl font-bold text-foreground mb-4 tracking-tight">
+                    {step.title}
                   </h5>
-                  <p className="text-gray-400 leading-relaxed text-sm font-light">
-                    {milestone.desc}
+                  <p className="text-muted-foreground text-lg leading-relaxed font-light max-w-2xl">
+                    {step.desc}
                   </p>
                 </div>
-              </motion.div>
-            ))}
-          </div>
+              </div>
+            </motion.div>
+          ))}
         </div>
       </div>
     </section>
