@@ -39,14 +39,14 @@ export function AboutHero() {
 
   return (
     <section ref={containerRef} className="relative h-screen min-h-[800px] w-full overflow-hidden bg-black flex items-center justify-center">
-      
+
       {/* Background Image with Parallax */}
-      <motion.div 
+      <motion.div
         className="absolute inset-0 z-0"
         style={{ scale: scaleImage }}
       >
-        <img 
-          src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=2500&auto=format&fit=crop" 
+        <img
+          src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=2500&auto=format&fit=crop"
           alt="The AFFOBE team"
           className="w-full h-full object-cover opacity-40 grayscale"
         />
@@ -55,7 +55,7 @@ export function AboutHero() {
       </motion.div>
 
       {/* Main Content */}
-      <motion.div 
+      <motion.div
         style={{ y: yText, opacity: opacityText }}
         className="container relative z-10 flex flex-col items-center justify-center text-center mt-20"
       >
@@ -70,7 +70,7 @@ export function AboutHero() {
           </span>
         </motion.div>
 
-        <motion.h1 
+        <motion.h1
           variants={containerVariants}
           initial="hidden"
           animate="visible"
@@ -81,7 +81,7 @@ export function AboutHero() {
           <motion.span variants={itemVariants} className="block">Solutions.</motion.span>
         </motion.h1>
 
-        <motion.p 
+        <motion.p
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1.2, delay: 0.8, ease: [0.16, 1, 0.3, 1] }}
@@ -92,13 +92,13 @@ export function AboutHero() {
       </motion.div>
 
       {/* Scroll indicator */}
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1, delay: 1.5 }}
         className="absolute bottom-12 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center"
       >
-        <motion.div 
+        <motion.div
           animate={{ y: [0, 10, 0] }}
           transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
           className="w-10 h-10 border border-white/20 rounded-full flex items-center justify-center text-white/50"
@@ -106,7 +106,7 @@ export function AboutHero() {
           <ArrowDown size={16} />
         </motion.div>
       </motion.div>
-      
+
     </section>
   )
 }
