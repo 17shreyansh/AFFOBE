@@ -1,4 +1,6 @@
-export function NoiseBackground() {
+import React from 'react';
+
+export const NoiseBackground = React.memo(function NoiseBackground() {
   return (
     <div className="pointer-events-none fixed inset-0 z-50 h-full w-full opacity-[0.03] mix-blend-multiply">
       <svg
@@ -17,4 +19,4 @@ export function NoiseBackground() {
       </svg>
     </div>
   );
-}
+});

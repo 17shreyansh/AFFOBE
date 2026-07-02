@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useRef, useEffect } from 'react';
+import Image from 'next/image';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ScrollParallax, MouseParallax } from "@/components/animations/parallax";
@@ -150,9 +151,12 @@ function ProjectCard({ project }: { project: any }) {
         {/* Hover Video Placeholder (CSS logic here just simulates the reveal) */}
         <div className="absolute inset-0 bg-primary/20 mix-blend-multiply opacity-0 group-hover:opacity-100 transition-opacity duration-700 z-10 pointer-events-none"></div>
         
-        <img 
+        <Image 
           src={project.image} 
           alt={project.title}
+          fill
+          sizes="(max-width: 768px) 100vw, 50vw"
+          quality={80}
           className="w-full h-full object-cover transition-transform duration-[2s] ease-out group-hover:scale-105"
         />
         

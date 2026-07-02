@@ -131,7 +131,7 @@ export function OurValues() {
                 initial={{ opacity: 0, x: 50, filter: 'blur(10px)' }}
                 animate={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
                 exit={{ opacity: 0, x: -50, filter: 'blur(10px)' }}
-                transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] as any }}
                 className="absolute inset-0 flex flex-col justify-center"
               >
                 <h4 className="text-primary font-bold tracking-[0.3em] uppercase text-sm mb-4">

@@ -1,6 +1,7 @@
 "use client"
 
 import React, { useRef } from 'react'
+import Image from 'next/image'
 import { motion, useScroll, useTransform, useSpring, useMotionValue } from 'framer-motion'
 
 export function CompanyStory() {
@@ -60,12 +61,15 @@ export function CompanyStory() {
               initial={{ opacity: 0, clipPath: 'polygon(50% 50%, 50% 50%, 50% 50%, 50% 50%)' }}
               whileInView={{ opacity: 1, clipPath: 'polygon(5% 0%, 100% 0%, 95% 100%, 0% 100%)' }}
               viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 1.5, ease: [0.77, 0, 0.175, 1] }}
+              transition={{ duration: 1.5, ease: [0.77, 0, 0.175, 1] as any }}
               className="relative h-full min-h-[500px] w-full group bg-primary overflow-hidden"
             >
-              <img 
+              <Image 
                 src="https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=1000&auto=format&fit=crop" 
                 alt="Company culture"
+                fill
+                sizes="(max-width: 1024px) 100vw, 50vw"
+                quality={80}
                 className="absolute inset-0 w-full h-full object-cover opacity-90 transition-transform duration-1000 group-hover:scale-110"
               />
               <div className="absolute inset-0 bg-primary/20 mix-blend-overlay" />
@@ -105,7 +109,7 @@ export function CompanyStory() {
               initial={{ opacity: 0, x: 20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+              transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] as any }}
             >
               <h2 className="text-primary font-medium tracking-[0.2em] uppercase text-xs mb-8 border-b border-primary/10 pb-4 inline-block relative">
                 Our Foundation
@@ -135,7 +139,7 @@ export function CompanyStory() {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+              transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] as any }}
               className="space-y-6 text-muted-foreground font-light leading-relaxed text-lg relative z-10"
             >
               <p>

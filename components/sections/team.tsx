@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useRef, useEffect } from 'react';
+import Image from 'next/image';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -94,10 +95,11 @@ export function Team() {
                 <div 
                   className="portrait-container relative w-full aspect-[2/3] overflow-hidden group cursor-interactive border border-border shadow-2xl"
                 >
-                  <img 
+                  <Image 
                     src={member.image} 
                     alt={`${member.name} ${member.surname}`}
-                    className="absolute inset-0 w-full h-[120%] -top-[10%] object-cover filter grayscale opacity-90 transition-all duration-1000 ease-out group-hover:grayscale-0 group-hover:scale-105 group-hover:opacity-100"
+                    fill
+                    className="absolute inset-0 w-full h-[120%] -top-[10%] object-cover filter grayscale opacity-90 transition-all duration-1000 ease-out group-hover:grayscale-0 group-hover:scale-105 group-hover:opacity-100 [will-change:transform,filter]"
                   />
                   <div className="absolute inset-0 bg-primary/20 mix-blend-multiply opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
                 </div>

@@ -1,6 +1,7 @@
 "use client"
 
 import React, { useRef } from 'react'
+import Image from 'next/image'
 import { motion, useScroll, useTransform } from 'framer-motion'
 
 const journeySteps = [
@@ -63,9 +64,12 @@ function StickyCard({ step }: { step: any }) {
         {/* Cinematic Image Area */}
         <div className="hidden md:block flex-1 relative h-full">
           <div className="absolute inset-0 bg-black/10 z-10" />
-          <img 
+          <Image 
             src={step.image} 
             alt={step.title} 
+            fill
+            sizes="(max-width: 768px) 0vw, 50vw"
+            quality={80}
             className="absolute inset-0 w-full h-full object-cover"
           />
         </div>

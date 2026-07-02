@@ -12,16 +12,13 @@ interface ScrollParallaxProps {
   className?: string;
 }
 
-export function ScrollParallax({ children, speed = 0.5, className = "" }: ScrollParallaxProps) {
+export const ScrollParallax = React.memo(function ScrollParallax({ children, speed = 0.5, className = "" }: ScrollParallaxProps) {
   const triggerRef = useRef<HTMLDivElement>(null);
   const targetRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!triggerRef.current || !targetRef.current) return;
 
-    // Calculate Y movement based on speed.
-    // If speed is 0.5, it moves half as fast as you scroll.
-    // We achieve this by moving the element inside its container.
     const yPercent = (1 - speed) * 100;
 
     const ctx = gsap.context(() => {
@@ -47,7 +44,7 @@ export function ScrollParallax({ children, speed = 0.5, className = "" }: Scroll
       </div>
     </div>
   );
-}
+});
 
 interface MouseParallaxProps {
   children?: React.ReactNode;
@@ -55,7 +52,7 @@ interface MouseParallaxProps {
   className?: string;
 }
 
-export function MouseParallax({ children, strength = 0.05, className = "" }: MouseParallaxProps) {
+export const MouseParallax = React.memo(function MouseParallax({ children, strength = 0.05, className = "" }: MouseParallaxProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const targetRef = useRef<HTMLDivElement>(null);
 
@@ -64,6 +61,10 @@ export function MouseParallax({ children, strength = 0.05, className = "" }: Mou
     const target = targetRef.current;
     if (!container || !target) return;
 
+    // Use gsap.quickTo for highly performant mouse tracking
+    const xTo = gsap.quickTo(target, "x", { duration: 1, ease: "power2.out" });
+    const yTo = gsap.quickTo(target, "y", { duration: 1, ease: "power2.out" });
+
     const handleMouseMove = (e: MouseEvent) => {
       const { clientX, clientY } = e;
       const { innerWidth, innerHeight } = window;
@@ -71,15 +72,11 @@ export function MouseParallax({ children, strength = 0.05, className = "" }: Mou
       const xPos = (clientX / innerWidth - 0.5) * 2; // -1 to 1
       const yPos = (clientY / innerHeight - 0.5) * 2; // -1 to 1
 
-      gsap.to(target, {
-        x: xPos * strength * 100,
-        y: yPos * strength * 100,
-        duration: 1,
-        ease: "power2.out",
-      });
+      xTo(xPos * strength * 100);
+      yTo(yPos * strength * 100);
     };
 
-    window.addEventListener("mousemove", handleMouseMove);
+    window.addEventListener("mousemove", handleMouseMove, { passive: true });
 
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
@@ -93,4 +90,4 @@ export function MouseParallax({ children, strength = 0.05, className = "" }: Mou
       </div>
     </div>
   );
-}
+});

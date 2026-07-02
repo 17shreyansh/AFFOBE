@@ -13,6 +13,7 @@ export function Hero() {
   const containerRef = useRef<HTMLDivElement>(null);
   const textContainerRef = useRef<HTMLDivElement>(null);
   const videoOverlayRef = useRef<HTMLDivElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
     if (!containerRef.current) return;
@@ -70,12 +71,15 @@ export function Hero() {
           loop 
           muted 
           playsInline
-          className="absolute inset-0 w-full h-full object-cover scale-105"
-          // Using a high-quality abstract placeholder video. Replace with your actual video asset.
-          src="https://cdn.pixabay.com/video/2020/05/21/40049-425026937_large.mp4"
-        />
+          preload="auto"
+          disablePictureInPicture
+          disableRemotePlayback
+          className="absolute inset-0 w-full h-full object-cover will-change-transform"
+        >
+          <source src="/HeroVideo.webm" type="video/webm" />
+        </video>
         {/* Cinematic Dark Overlay */}
-        <div ref={videoOverlayRef} className="absolute inset-0 bg-primary opacity-100 z-10 mix-blend-multiply" />
+        <div ref={videoOverlayRef} className="absolute inset-0 bg-primary opacity-40 z-10" />
       </div>
 
       {/* Main Content */}

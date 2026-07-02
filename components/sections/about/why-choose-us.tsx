@@ -43,7 +43,7 @@ export function WhyChooseUs() {
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] }
+      transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] as any }
     }
   }
 
@@ -55,7 +55,7 @@ export function WhyChooseUs() {
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] as any }}
             className="flex-1 text-left lg:sticky lg:top-32"
           >
             <h2 className="text-primary font-medium tracking-[0.2em] uppercase text-xs mb-8 border-b border-primary/10 pb-4 inline-block">

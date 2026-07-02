@@ -1,9 +1,11 @@
 "use client"
 
 import React from 'react'
+import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { ArrowRight, Calendar } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import Link from 'next/link'
 
 const posts = [
   {
@@ -42,9 +44,11 @@ export function BlogPreview() {
               Expert perspectives on performance engineering, fintech innovation, and digital transformation.
             </p>
           </div>
-          <Button variant="outline" className="rounded-full border-primary/20 text-primary hover:bg-primary hover:text-white">
-            View All Articles <ArrowRight size={16} className="ml-2" />
-          </Button>
+          <Link href="/blog">
+            <Button variant="outline" className="rounded-full border-primary/20 text-primary hover:bg-primary hover:text-white">
+              View All <ArrowRight size={16} className="ml-2" />
+            </Button>
+          </Link>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -58,9 +62,10 @@ export function BlogPreview() {
               className="group bg-card rounded-2xl overflow-hidden border border-border shadow-sm hover:shadow-xl hover:shadow-primary/5 transition-all duration-300 flex flex-col"
             >
               <div className="relative overflow-hidden aspect-[16/10]">
-                <img 
+                <Image 
                   src={post.image} 
                   alt={post.title}
+                  fill
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                 />
                 <div className="absolute top-4 left-4 bg-background/90 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-bold text-primary tracking-wide uppercase">

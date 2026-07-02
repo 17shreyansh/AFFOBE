@@ -11,7 +11,7 @@ export function ContactMap() {
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] as any }}
         className="mb-16 text-center"
       >
         <h2 className="text-primary font-bold tracking-[0.2em] uppercase text-xs mb-6">
@@ -26,7 +26,7 @@ export function ContactMap() {
         initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+        transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] as any }}
         className="relative w-full h-[600px] bg-slate-50/50 rounded-[3rem] overflow-hidden group mx-auto"
       >
         {/* Placeholder for actual Google Maps iframe */}

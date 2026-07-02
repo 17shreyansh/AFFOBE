@@ -1,16 +1,18 @@
+import dynamic from 'next/dynamic'
 import { Navbar } from '@/components/layout/navbar'
 import { Footer } from '@/components/layout/footer'
 import { Hero } from '@/components/sections/hero'
-import { About } from '@/components/sections/about'
-import { Services } from '@/components/sections/services'
-import { FeaturedWork } from '@/components/sections/featured-work'
-import { Clients } from '@/components/sections/clients'
-import { Team } from '@/components/sections/team'
-import { Gallery } from '@/components/sections/gallery'
-import { BlogPreview } from '@/components/sections/blog-preview'
-import { Testimonials } from '@/components/sections/testimonials'
-import { FAQ } from '@/components/sections/faq'
-import { CTA } from '@/components/sections/cta'
+
+const About = dynamic(() => import('@/components/sections/about').then(mod => mod.About), { ssr: true })
+const Services = dynamic(() => import('@/components/sections/services').then(mod => mod.Services), { ssr: true })
+const FeaturedWork = dynamic(() => import('@/components/sections/featured-work').then(mod => mod.FeaturedWork), { ssr: true })
+const Clients = dynamic(() => import('@/components/sections/clients').then(mod => mod.Clients), { ssr: true })
+const Team = dynamic(() => import('@/components/sections/team').then(mod => mod.Team), { ssr: true })
+const Gallery = dynamic(() => import('@/components/sections/gallery').then(mod => mod.Gallery), { ssr: true })
+const BlogPreview = dynamic(() => import('@/components/sections/blog-preview').then(mod => mod.BlogPreview), { ssr: true })
+const Testimonials = dynamic(() => import('@/components/sections/testimonials').then(mod => mod.Testimonials), { ssr: true })
+const FAQ = dynamic(() => import('@/components/sections/faq').then(mod => mod.FAQ), { ssr: true })
+const CTA = dynamic(() => import('@/components/sections/cta').then(mod => mod.CTA), { ssr: true })
 
 export default function Home() {
   return (

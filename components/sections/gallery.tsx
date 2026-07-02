@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useRef, useEffect, useState } from 'react';
+import Image from 'next/image';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ScrollParallax, MouseParallax } from "@/components/animations/parallax";
@@ -19,7 +20,7 @@ const allImages = Array.from({ length: 12 }).map((_, i) => ({
   src: baseImages[i % baseImages.length]
 }));
 
-export function Gallery() {
+export const Gallery = React.memo(function Gallery() {
   const containerRef = useRef<HTMLElement>(null);
   const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
   const isHoveredRef = useRef(false);
@@ -189,10 +190,13 @@ export function Gallery() {
               <div className="relative w-full h-full group cursor-interactive glass-panel p-2 rounded-2xl border border-primary/20 hover:border-primary/50 hover:shadow-[0_0_40px_rgba(37,99,235,0.3)] transition-all duration-300">
                 <div className="relative w-full h-full overflow-hidden rounded-xl">
                   <div className="absolute inset-0 bg-primary/10 group-hover:bg-transparent transition-colors z-10 pointer-events-none"></div>
-                  <img 
+                  <Image 
                     src={item.src} 
-                    alt={`Orbit record ${i}`} 
-                    className="absolute inset-0 w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-all duration-700 ease-out group-hover:scale-110 group-hover:brightness-110"
+                    alt={`Orbit record ${i}`}
+                    fill
+                    sizes="(max-width: 768px) 33vw, 15vw"
+                    quality={75}
+                    className="absolute inset-0 w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-all duration-700 ease-out group-hover:scale-110 group-hover:brightness-110 [will-change:transform,filter]"
                   />
                 </div>
                 <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-background/80 backdrop-blur-sm px-4 py-2 rounded-full text-xs font-mono uppercase tracking-widest text-primary opacity-0 group-hover:opacity-100 transition-opacity duration-300 border border-primary/20 whitespace-nowrap">
@@ -206,4 +210,4 @@ export function Gallery() {
       </div>
     </section>
   );
-}
+});

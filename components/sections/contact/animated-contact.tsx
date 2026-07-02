@@ -82,7 +82,7 @@ export function AnimatedContact() {
         <motion.div 
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+          transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] as any }}
           onMouseMove={handleMouseMove}
           className="relative w-full rounded-[2.5rem] md:rounded-[3rem] overflow-hidden shadow-[0_20px_80px_rgba(0,0,0,0.07)] flex flex-col lg:flex-row bg-white border border-slate-100"
         >

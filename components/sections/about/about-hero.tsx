@@ -1,7 +1,8 @@
 "use client"
 
 import React, { useRef } from 'react'
-import { motion, useScroll, useTransform } from 'framer-motion'
+import Image from 'next/image'
+import { motion, useScroll, useTransform, Variants } from 'framer-motion'
 import { ArrowDown } from 'lucide-react'
 
 export function AboutHero() {
@@ -17,7 +18,7 @@ export function AboutHero() {
   const scaleImage = useTransform(scrollYProgress, [0, 1], [1, 1.15])
 
   // Staggered text reveal variants
-  const containerVariants = {
+  const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
@@ -28,12 +29,12 @@ export function AboutHero() {
     }
   }
 
-  const itemVariants = {
+  const itemVariants: Variants = {
     hidden: { opacity: 0, y: 40 },
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 1, ease: [0.16, 1, 0.3, 1] }
+      transition: { duration: 1, ease: [0.16, 1, 0.3, 1] as any }
     }
   }
 
@@ -45,9 +46,13 @@ export function AboutHero() {
         className="absolute inset-0 z-0"
         style={{ scale: scaleImage }}
       >
-        <img
+        <Image
           src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=2500&auto=format&fit=crop"
           alt="The AFFOBE team"
+          fill
+          priority
+          sizes="100vw"
+          quality={85}
           className="w-full h-full object-cover opacity-40 grayscale"
         />
         {/* Subtle vignette / overlay */}
@@ -62,7 +67,7 @@ export function AboutHero() {
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+          transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] as any }}
           className="mb-10"
         >
           <span className="text-primary tracking-[0.3em] uppercase text-sm font-semibold border border-primary/30 px-6 py-2 rounded-full">
@@ -84,7 +89,7 @@ export function AboutHero() {
         <motion.p
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1.2, delay: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          transition={{ duration: 1.2, delay: 0.8, ease: [0.16, 1, 0.3, 1] as any }}
           className="mt-12 text-lg md:text-2xl text-gray-300 max-w-2xl font-light leading-relaxed"
         >
           We build amazing websites that look great and work perfectly.

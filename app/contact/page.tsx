@@ -1,7 +1,9 @@
+import dynamic from 'next/dynamic'
 import { Navbar } from "@/components/layout/navbar"
 import { Footer } from "@/components/layout/footer"
 import { AnimatedContact } from "@/components/sections/contact/animated-contact"
-import { ContactFaq } from "@/components/sections/contact/contact-faq"
+
+const ContactFaq = dynamic(() => import("@/components/sections/contact/contact-faq").then(mod => mod.ContactFaq), { ssr: true })
 
 export default function ContactPage() {
   return (

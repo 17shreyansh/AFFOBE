@@ -1,6 +1,7 @@
 "use client"
 
 import React, { useRef, useState } from 'react'
+import Image from 'next/image'
 import { motion, useSpring, useTransform, useMotionValue, useMotionTemplate } from 'framer-motion'
 import { Globe, Mail } from 'lucide-react'
 import Link from 'next/link'
@@ -49,7 +50,7 @@ function MagneticPortrait({ member, index }: { member: any, index: number }) {
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-100px" }}
-      transition={{ duration: 0.8, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] }}
+      transition={{ duration: 0.8, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] as any }}
       className="group relative flex flex-col items-center"
     >
       <motion.div
@@ -67,9 +68,12 @@ function MagneticPortrait({ member, index }: { member: any, index: number }) {
       >
         {/* The Card Body */}
         <div className="absolute inset-0 rounded-[2rem] overflow-hidden bg-slate-100 shadow-2xl shadow-primary/10">
-          <img 
+          <Image 
             src={member.image}
             alt={member.name}
+            fill
+            sizes="(max-width: 768px) 100vw, 33vw"
+            quality={80}
             className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
           />
           

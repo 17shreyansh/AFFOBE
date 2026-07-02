@@ -1,6 +1,7 @@
 "use client"
 
 import React, { useState, useEffect, useCallback } from 'react'
+import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Quote, ArrowLeft, ArrowRight, Star } from 'lucide-react'
 
@@ -77,7 +78,7 @@ export function Testimonials() {
           <div className="relative z-10 flex flex-col md:flex-row gap-12 items-center justify-between">
             
             {/* Content area */}
-            <div className="flex-1 w-full relative min-h-[280px] md:min-h-[180px] flex flex-col justify-center">
+            <div className="flex-1 w-full relative h-[320px] sm:h-[280px] md:h-[240px] flex flex-col justify-center">
               <AnimatePresence mode="wait" custom={direction}>
                 <motion.div
                   key={currentIndex}
@@ -86,7 +87,7 @@ export function Testimonials() {
                   initial="enter"
                   animate="center"
                   exit="exit"
-                  transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                  transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] as any }}
                   className="w-full flex flex-col h-full justify-between"
                 >
                   <div>
@@ -98,16 +99,18 @@ export function Testimonials() {
                     </div>
 
                     {/* Text */}
-                    <h3 className="text-2xl md:text-3xl lg:text-4xl font-heading text-white leading-relaxed mb-8">
+                    <h3 className="text-xl md:text-2xl font-heading text-white leading-relaxed mb-8">
                       "{testimonials[currentIndex].text}"
                     </h3>
                   </div>
 
                   {/* Author Info */}
                   <div className="flex items-center gap-5 mt-auto">
-                    <img 
+                    <Image 
                       src={testimonials[currentIndex].image} 
                       alt={testimonials[currentIndex].name}
+                      width={64}
+                      height={64}
                       className="w-16 h-16 rounded-full object-cover border-2 border-zinc-800"
                     />
                     <div>

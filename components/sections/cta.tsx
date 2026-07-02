@@ -16,7 +16,7 @@ export function CTA() {
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] as any }}
           className="relative w-full rounded-[2.5rem] md:rounded-[4rem] overflow-hidden bg-primary p-10 md:p-24 flex flex-col items-center text-center shadow-[0_0_80px_rgba(37,99,235,0.3)]"
         >
           {/* Subtle Animated White Lighting within the solid blue card */}

@@ -65,7 +65,7 @@ export function FAQ() {
                       initial={{ height: 0, opacity: 0 }}
                       animate={{ height: "auto", opacity: 1 }}
                       exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                      transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] as any }}
                       className="overflow-hidden"
                     >
                       <p className="text-muted-foreground text-lg pt-6 pb-2 pr-12 leading-relaxed">

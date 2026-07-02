@@ -65,7 +65,7 @@ export function ContactForm() {
       initial={{ opacity: 0, x: -30 }}
       whileInView={{ opacity: 1, x: 0 }}
       viewport={{ once: true }}
-      transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+      transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] as any }}
       className="w-full h-full flex flex-col justify-center"
     >
       <div className="mb-10">

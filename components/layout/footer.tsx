@@ -5,7 +5,9 @@ import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { motion, useInView } from 'framer-motion'
-import Lightfall from '@/components/Lightfall'
+import dynamic from 'next/dynamic'
+
+const Lightfall = dynamic(() => import('@/components/Lightfall'), { ssr: false })
 
 export function Footer() {
   const bottomRef = useRef<HTMLDivElement>(null)
@@ -46,7 +48,7 @@ export function Footer() {
                 animate={isInView ? { y: 0, rotate: 0, opacity: 1 } : { y: "-100%", rotate: -10, opacity: 0 }}
                 transition={{ 
                   duration: 1, 
-                  ease: [0.16, 1, 0.3, 1], 
+                  ease: [0.16, 1, 0.3, 1] as any, 
                   delay: index * 0.05 
                 }}
                 className="inline-block"

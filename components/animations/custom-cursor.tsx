@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 
-export function CustomCursor() {
+export const CustomCursor = React.memo(function CustomCursor() {
   const cursorRef = useRef<HTMLDivElement>(null);
   const cursorDotRef = useRef<HTMLDivElement>(null);
   const [isHovering, setIsHovering] = useState(false);
@@ -53,8 +53,8 @@ export function CustomCursor() {
       }
     };
 
-    window.addEventListener("mousemove", moveCursor);
-    document.addEventListener("mouseover", handleMouseOver);
+    window.addEventListener("mousemove", moveCursor, { passive: true });
+    document.addEventListener("mouseover", handleMouseOver, { passive: true });
 
     // Initial positioning off-screen to avoid flash
     gsap.set([cursor, dot], { xPercent: -50, yPercent: -50, opacity: 1 });
@@ -94,4 +94,4 @@ export function CustomCursor() {
       />
     </>
   );
-}
+});

@@ -41,7 +41,7 @@ export function ContactInfo() {
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] }
+      transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] as any }
     }
   }
 
@@ -51,7 +51,7 @@ export function ContactInfo() {
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] as any }}
         className="mb-16"
       >
         <h2 className="text-primary font-bold tracking-[0.2em] uppercase text-xs mb-6">
