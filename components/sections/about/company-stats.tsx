@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { motion, useInView, useSpring, useTransform, useMotionValue, useMotionTemplate } from 'framer-motion'
 import { Calendar, CheckCircle2, HeartHandshake, Globe2 } from 'lucide-react'
 
@@ -27,9 +27,8 @@ function AnimatedCounter({ value, duration = 2.5 }: { value: number, duration?: 
 }
 
 // Custom "God-Tier" 3D Magnetic Card Component
-function MagneticCard({ stat, index }: { stat: any, index: number }) {
+function MagneticCard({ stat, index }: { stat: { value: number; label: string; suffix: string; icon: React.ReactNode }; index: number }) {
   const ref = useRef<HTMLDivElement>(null)
-  const [isHovered, setIsHovered] = useState(false)
   
   // Motion values for mouse tracking (absolute pixels for border/glare)
   const mouseX = useMotionValue(0)
@@ -61,7 +60,6 @@ function MagneticCard({ stat, index }: { stat: any, index: number }) {
   }
 
   const handleMouseLeave = () => {
-    setIsHovered(false)
     normX.set(0)
     normY.set(0)
   }
@@ -72,9 +70,8 @@ function MagneticCard({ stat, index }: { stat: any, index: number }) {
       initial={{ opacity: 0, y: 50 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-50px" }}
-      transition={{ duration: 0.8, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] as any }}
+      transition={{ duration: 0.8, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] }}
       onMouseMove={handleMouseMove}
-      onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={handleMouseLeave}
       style={{
         rotateX,

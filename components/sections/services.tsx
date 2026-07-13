@@ -54,7 +54,7 @@ export function Services() {
       // Initially hide panels except first
       gsap.set(panels.slice(1), { yPercent: 100, opacity: 0, scale: 0.9, rotationX: 10 });
 
-      panels.forEach((panel: any, i) => {
+      panels.forEach((panel: HTMLElement, i) => {
         if (i === 0) return; // Skip first panel as it's already visible
         
         // Animate out previous panel

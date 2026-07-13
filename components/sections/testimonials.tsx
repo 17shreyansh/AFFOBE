@@ -87,7 +87,7 @@ export function Testimonials() {
                   initial="enter"
                   animate="center"
                   exit="exit"
-                  transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] as any }}
+                  transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] }}
                   className="w-full flex flex-col h-full justify-between"
                 >
                   <div>
@@ -100,7 +100,7 @@ export function Testimonials() {
 
                     {/* Text */}
                     <h3 className="text-xl md:text-2xl font-heading text-white leading-relaxed mb-8">
-                      "{testimonials[currentIndex].text}"
+                      &quot;{testimonials[currentIndex].text}&quot;
                     </h3>
                   </div>
 

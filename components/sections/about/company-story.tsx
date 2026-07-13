@@ -61,7 +61,7 @@ export function CompanyStory() {
               initial={{ opacity: 0, clipPath: 'polygon(50% 50%, 50% 50%, 50% 50%, 50% 50%)' }}
               whileInView={{ opacity: 1, clipPath: 'polygon(5% 0%, 100% 0%, 95% 100%, 0% 100%)' }}
               viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 1.5, ease: [0.77, 0, 0.175, 1] as any }}
+              transition={{ duration: 1.5, ease: [0.77, 0, 0.175, 1] as [number, number, number, number] }}
               className="relative h-full min-h-[500px] w-full group bg-primary overflow-hidden"
             >
               <Image 
@@ -109,7 +109,7 @@ export function CompanyStory() {
               initial={{ opacity: 0, x: 20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] as any }}
+              transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] }}
             >
               <h2 className="text-primary font-medium tracking-[0.2em] uppercase text-xs mb-8 border-b border-primary/10 pb-4 inline-block relative">
                 Our Foundation
@@ -139,7 +139,7 @@ export function CompanyStory() {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] as any }}
+              transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] }}
               className="space-y-6 text-muted-foreground font-light leading-relaxed text-lg relative z-10"
             >
               <p>

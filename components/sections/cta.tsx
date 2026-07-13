@@ -4,7 +4,7 @@ import React from 'react'
 import { motion } from 'framer-motion'
 import { ArrowRight, Sparkles } from 'lucide-react'
 import { MagneticButton } from '@/components/animations/magnetic-button'
-import { ScrollParallax } from '@/components/animations/parallax'
+
 
 export function CTA() {
   return (
@@ -16,7 +16,7 @@ export function CTA() {
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] as any }}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] }}
           className="relative w-full rounded-[2.5rem] md:rounded-[4rem] overflow-hidden bg-primary p-10 md:p-24 flex flex-col items-center text-center shadow-[0_0_80px_rgba(37,99,235,0.3)]"
         >
           {/* Subtle Animated White Lighting within the solid blue card */}
@@ -63,7 +63,7 @@ export function CTA() {
             transition={{ duration: 0.8, delay: 0.4 }}
             className="text-base md:text-xl text-white/80 font-light leading-relaxed max-w-2xl mx-auto mb-12 relative z-10"
           >
-            Join the ranks of industry leaders. Let's engineer a digital presence that shifts culture and drives unprecedented growth.
+            Join the ranks of industry leaders. Let&apos;s engineer a digital presence that shifts culture and drives unprecedented growth.
           </motion.p>
 
           {/* Highly Attractive Interactive Button (White outline -> White fill -> Blue text) */}

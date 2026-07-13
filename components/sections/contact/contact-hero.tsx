@@ -13,7 +13,7 @@ export function ContactHero() {
           <motion.div 
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] as any }}
+            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] }}
             className="flex flex-col justify-center"
           >
             <div className="inline-flex items-center gap-3 px-6 py-2 rounded-full border border-primary/20 text-primary text-xs font-bold uppercase tracking-[0.2em] mb-8 bg-primary/5 w-fit">
@@ -21,7 +21,7 @@ export function ContactHero() {
             </div>
             
             <h1 className="text-5xl md:text-6xl lg:text-8xl font-heading font-black text-foreground leading-[1] tracking-tighter mb-8">
-              Let's Get in <br />
+              Let&apos;s Get in <br />
               <span className="text-primary">Touch.</span>
             </h1>
             
@@ -33,7 +33,7 @@ export function ContactHero() {
           <motion.div 
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] as any }}
+            transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] }}
             className="relative w-full aspect-square lg:aspect-[4/3] rounded-[2rem] overflow-hidden bg-slate-100"
           >
             <Image 

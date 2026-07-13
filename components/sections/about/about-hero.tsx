@@ -4,7 +4,7 @@ import React, { useRef } from 'react'
 import Image from 'next/image'
 import { motion, useScroll, useTransform, Variants } from 'framer-motion'
 import { ArrowDown } from 'lucide-react'
-
+import ImageTrail from '@/components/animations/ImageTrail'
 export function AboutHero() {
   const containerRef = useRef<HTMLDivElement>(null)
   const { scrollYProgress } = useScroll({
@@ -34,7 +34,7 @@ export function AboutHero() {
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 1, ease: [0.16, 1, 0.3, 1] as any }
+      transition: { duration: 1, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] }
     }
   }
 
@@ -59,15 +59,32 @@ export function AboutHero() {
         <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/40 to-black/90" />
       </motion.div>
 
+      {/* Image Trail Background Effect */}
+      <div className="absolute inset-0 z-[5]">
+        <ImageTrail
+          items={[
+            'https://picsum.photos/id/287/300/300',
+            'https://picsum.photos/id/1001/300/300',
+            'https://picsum.photos/id/1025/300/300',
+            'https://picsum.photos/id/1026/300/300',
+            'https://picsum.photos/id/1027/300/300',
+            'https://picsum.photos/id/1028/300/300',
+            'https://picsum.photos/id/1029/300/300',
+            'https://picsum.photos/id/1030/300/300',
+          ]}
+          variant={1}
+        />
+      </div>
+
       {/* Main Content */}
       <motion.div
         style={{ y: yText, opacity: opacityText }}
-        className="container relative z-10 flex flex-col items-center justify-center text-center mt-20"
+        className="container relative z-10 flex flex-col items-center justify-center text-center mt-20 pointer-events-none"
       >
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] as any }}
+          transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] }}
           className="mb-10"
         >
           <span className="text-primary tracking-[0.3em] uppercase text-sm font-semibold border border-primary/30 px-6 py-2 rounded-full">
@@ -89,7 +106,7 @@ export function AboutHero() {
         <motion.p
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1.2, delay: 0.8, ease: [0.16, 1, 0.3, 1] as any }}
+          transition={{ duration: 1.2, delay: 0.8, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] }}
           className="mt-12 text-lg md:text-2xl text-gray-300 max-w-2xl font-light leading-relaxed"
         >
           We build amazing websites that look great and work perfectly.

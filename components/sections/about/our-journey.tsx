@@ -2,7 +2,7 @@
 
 import React, { useRef } from 'react'
 import Image from 'next/image'
-import { motion, useScroll, useTransform } from 'framer-motion'
+import { motion } from 'framer-motion'
 
 const journeySteps = [
   {
@@ -37,7 +37,7 @@ const journeySteps = [
   }
 ]
 
-function StickyCard({ step }: { step: any }) {
+function StickyCard({ step }: { step: { year: string; title: string; desc: string; image: string } }) {
   return (
     <div className="h-screen flex items-center justify-center sticky top-0">
       <motion.div 

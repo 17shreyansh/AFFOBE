@@ -3,7 +3,7 @@
 import React, { useRef, useEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { SplitText } from "@/components/animations/split-text";
+
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 
@@ -13,12 +13,12 @@ export function Hero() {
   const containerRef = useRef<HTMLDivElement>(null);
   const textContainerRef = useRef<HTMLDivElement>(null);
   const videoOverlayRef = useRef<HTMLDivElement>(null);
-  const videoRef = useRef<HTMLVideoElement>(null);
+
 
   useEffect(() => {
     if (!containerRef.current) return;
     
-    let ctx = gsap.context(() => {
+    const ctx = gsap.context(() => {
       const tl = gsap.timeline();
 
       // Cinematic Fade In

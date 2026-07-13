@@ -4,7 +4,7 @@ import React, { useRef, useEffect } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ScrollParallax, MouseParallax } from "@/components/animations/parallax";
-import { SplitText } from "@/components/animations/split-text";
+
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -40,7 +40,7 @@ export function About() {
       });
 
       // Animate milestones
-      gsap.utils.toArray(".milestone-node").forEach((node: any, i) => {
+      (gsap.utils.toArray(".milestone-node") as Element[]).forEach((node, i) => {
         gsap.from(node, {
           opacity: 0,
           x: i % 2 === 0 ? -50 : 50,
@@ -54,7 +54,7 @@ export function About() {
       });
 
       // Floating stats
-      gsap.utils.toArray(".floating-stat").forEach((stat: any) => {
+      (gsap.utils.toArray(".floating-stat") as Element[]).forEach((stat) => {
         gsap.from(stat, {
           opacity: 0,
           y: 50,

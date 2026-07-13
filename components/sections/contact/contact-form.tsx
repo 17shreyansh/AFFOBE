@@ -51,7 +51,7 @@ export function ContactForm() {
       setTimeout(() => {
         setStatus('idle')
       }, 5000)
-    } catch (err) {
+    } catch {
       setStatus('error')
       setErrorMessage('Something went wrong. Please try again later.')
     }
@@ -65,7 +65,7 @@ export function ContactForm() {
       initial={{ opacity: 0, x: -30 }}
       whileInView={{ opacity: 1, x: 0 }}
       viewport={{ once: true }}
-      transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] as any }}
+      transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] }}
       className="w-full h-full flex flex-col justify-center"
     >
       <div className="mb-10">
@@ -73,7 +73,7 @@ export function ContactForm() {
           Send us a message
         </h3>
         <p className="text-muted-foreground text-lg font-light">
-          Tell us about your project, and we'll get back to you shortly.
+          Tell us about your project, and we&apos;ll get back to you shortly.
         </p>
       </div>
 

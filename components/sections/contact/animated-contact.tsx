@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState, useRef } from 'react'
+import React, { useState } from 'react'
 import { motion, AnimatePresence, useMotionTemplate, useMotionValue } from 'framer-motion'
 import { MapPin, Phone, Mail, Loader2, CheckCircle2, AlertCircle, ArrowRight } from 'lucide-react'
 import { Button } from '@/components/ui/button'
@@ -50,7 +50,7 @@ export function AnimatedContact() {
       setStatus('success')
       setFormData({ name: '', email: '', phone: '', service: '', message: '' })
       setTimeout(() => setStatus('idle'), 5000)
-    } catch (err) {
+    } catch {
       setStatus('error')
       setErrorMessage('Something went wrong. Please try again.')
     }
@@ -82,7 +82,7 @@ export function AnimatedContact() {
         <motion.div 
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] as any }}
+          transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] }}
           onMouseMove={handleMouseMove}
           className="relative w-full rounded-[2.5rem] md:rounded-[3rem] overflow-hidden shadow-[0_20px_80px_rgba(0,0,0,0.07)] flex flex-col lg:flex-row bg-white border border-slate-100"
         >
@@ -128,7 +128,7 @@ export function AnimatedContact() {
                 transition={{ delay: 0.2, duration: 0.8 }}
                 className="text-4xl md:text-5xl lg:text-6xl font-heading font-black tracking-tighter mb-4 leading-[1.1] text-white"
               >
-                Let's build <br className="hidden md:block" /> the future.
+                Let&apos;s build <br className="hidden md:block" /> the future.
               </motion.h2>
               <p className="text-white/60 text-lg font-light leading-relaxed max-w-sm mb-16">
                 Ready to elevate your digital presence? Send us a message and our team will get back to you within 24 hours.

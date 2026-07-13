@@ -1,15 +1,14 @@
 "use client"
 
-import React, { useRef, useState } from 'react'
+import React, { useRef } from 'react'
 import Image from 'next/image'
 import { motion, useSpring, useTransform, useMotionValue, useMotionTemplate } from 'framer-motion'
 import { Globe, Mail } from 'lucide-react'
 import Link from 'next/link'
 
 // Custom Magnetic 3D Portrait Component
-function MagneticPortrait({ member, index }: { member: any, index: number }) {
+function MagneticPortrait({ member, index }: { member: { name: string; role: string; desc: string; image: string }; index: number }) {
   const ref = useRef<HTMLDivElement>(null)
-  const [isHovered, setIsHovered] = useState(false)
   
   // Motion values for absolute mouse tracking (for glares)
   const mouseX = useMotionValue(0)
@@ -40,7 +39,6 @@ function MagneticPortrait({ member, index }: { member: any, index: number }) {
   }
 
   const handleMouseLeave = () => {
-    setIsHovered(false)
     normX.set(0)
     normY.set(0)
   }
@@ -50,13 +48,12 @@ function MagneticPortrait({ member, index }: { member: any, index: number }) {
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-100px" }}
-      transition={{ duration: 0.8, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] as any }}
+      transition={{ duration: 0.8, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] }}
       className="group relative flex flex-col items-center"
     >
       <motion.div
         ref={ref}
         onMouseMove={handleMouseMove}
-        onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={handleMouseLeave}
         style={{
           rotateX,

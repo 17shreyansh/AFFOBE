@@ -38,9 +38,9 @@ export function Team() {
     if (!containerRef.current) return;
 
     const ctx = gsap.context(() => {
-      const portraits = gsap.utils.toArray('.portrait-container');
+      const portraits = gsap.utils.toArray('.portrait-container') as Element[];
       
-      portraits.forEach((portrait: any) => {
+      portraits.forEach((portrait) => {
         const img = portrait.querySelector('img');
         
         // Parallax image within crop

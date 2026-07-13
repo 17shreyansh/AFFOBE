@@ -11,7 +11,7 @@ function AbstractPanel({
   setHoveredIndex, 
   isDesktop 
 }: { 
-  card: any, 
+  card: { title: string; watermark: string; icon: React.ReactNode; description: string; bgClass: string }, 
   index: number, 
   hoveredIndex: number | null, 
   setHoveredIndex: (v: number | null) => void,

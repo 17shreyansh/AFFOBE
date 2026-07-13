@@ -41,7 +41,7 @@ export function ContactInfo() {
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] as any }
+      transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] }
     }
   }
 
@@ -51,14 +51,14 @@ export function ContactInfo() {
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] as any }}
+        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] }}
         className="mb-16"
       >
         <h2 className="text-primary font-bold tracking-[0.2em] uppercase text-xs mb-6">
           Contact Details
         </h2>
         <h3 className="text-4xl md:text-5xl lg:text-6xl font-heading font-black text-foreground tracking-tighter mb-8 leading-[1.1]">
-          We'd love to hear <br /> from you.
+          We&apos;d love to hear <br /> from you.
         </h3>
         <p className="text-muted-foreground text-lg leading-relaxed font-light max-w-md">
           Reach out to us through any of the channels below. We strive to respond to all inquiries within 24 hours.

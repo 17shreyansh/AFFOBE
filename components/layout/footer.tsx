@@ -3,6 +3,7 @@
 import React, { useRef } from 'react'
 import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
+import { IoLogoInstagram, IoLogoFacebook, IoLogoYoutube, IoLogoLinkedin } from 'react-icons/io5'
 import { Button } from '@/components/ui/button'
 import { motion, useInView } from 'framer-motion'
 import dynamic from 'next/dynamic'
@@ -20,8 +21,8 @@ export function Footer() {
     >
       <div className="absolute inset-0 z-[-1] pointer-events-auto">
         <Lightfall
-          colors={['#ffffff', '#ffffff', '#ffffff']}
-          backgroundColor="#386bf5"
+          colors={['#386bf5', '#386bf5', '#386bf5']}
+          backgroundColor="#0a192f"
           speed={0.5}
           streakCount={2}
           streakWidth={1}
@@ -48,7 +49,7 @@ export function Footer() {
                 animate={isInView ? { y: 0, rotate: 0, opacity: 1 } : { y: "-100%", rotate: -10, opacity: 0 }}
                 transition={{ 
                   duration: 1, 
-                  ease: [0.16, 1, 0.3, 1] as any, 
+                  ease: [0.16, 1, 0.3, 1] as [number, number, number, number], 
                   delay: index * 0.05 
                 }}
                 className="inline-block"
@@ -103,10 +104,16 @@ export function Footer() {
           <div className="lg:col-span-2 lg:col-start-11">
             <h4 className="text-xs md:text-sm font-bold mb-4 md:mb-6 text-white/50 uppercase tracking-widest">Socials</h4>
             <ul className="space-y-3 md:space-y-3">
-              {['Instagram', 'Twitter', 'LinkedIn', 'Behance', 'Dribbble'].map((item) => (
-                <li key={item}>
-                  <a href="#" className="group relative inline-block text-lg md:text-base font-medium hover:text-white transition-colors text-white/80">
-                    <span className="relative z-10">{item}</span>
+              {[
+                { name: 'Instagram', icon: IoLogoInstagram, href: '#' },
+                { name: 'Facebook', icon: IoLogoFacebook, href: '#' },
+                { name: 'YouTube', icon: IoLogoYoutube, href: '#' },
+                { name: 'LinkedIn', icon: IoLogoLinkedin, href: '#' },
+              ].map((item) => (
+                <li key={item.name}>
+                  <a href={item.href} className="group relative inline-flex items-center gap-2 text-lg md:text-base font-medium hover:text-white transition-colors text-white/80 pb-1">
+                    <item.icon className="w-5 h-5" />
+                    <span className="relative z-10">{item.name}</span>
                     <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-white transition-all duration-300 group-hover:w-full"></span>
                   </a>
                 </li>

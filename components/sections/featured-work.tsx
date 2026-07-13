@@ -51,7 +51,7 @@ export function FeaturedWork() {
 
     const ctx = gsap.context(() => {
       // Image reveal masks
-      gsap.utils.toArray(".project-image-container").forEach((container: any) => {
+      (gsap.utils.toArray(".project-image-container") as Element[]).forEach((container) => {
         const image = container.querySelector("img");
         
         gsap.fromTo(image, 
@@ -143,7 +143,7 @@ export function FeaturedWork() {
   );
 }
 
-function ProjectCard({ project }: { project: any }) {
+function ProjectCard({ project }: { project: { id: number; title: string; category: string; image: string; size: string; speed: number } }) {
   return (
     <div className="group cursor-interactive w-full" data-cursor="view">
       <MouseParallax strength={0.02} className="relative project-image-container overflow-hidden rounded-2xl aspect-[4/3] bg-secondary/20 mb-8">

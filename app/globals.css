@@ -3,9 +3,9 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme {
-  --font-sans: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
-  --font-mono: var(--font-mono), ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-  --font-heading: var(--font-heading), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: ui-sans-serif, system-ui, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  --font-heading: ui-sans-serif, system-ui, sans-serif;
 
   /* Fluid Typography */
   --text-fluid-xs: clamp(0.75rem, 0.71rem + 0.2vw, 0.875rem);
@@ -81,29 +81,28 @@
   --radius: 1rem; /* Softened edges for digital/glass feel */
 }
 
-/* Force same theme for dark right now to maintain brand aesthetic */
 .dark {
-  --background: 210 20% 98%; 
-  --foreground: 222 47% 11%;
-  --card: 0 0% 100%;
-  --card-foreground: 222 47% 11%;
-  --popover: 0 0% 100%;
-  --popover-foreground: 222 47% 11%;
+  --background: 240 10% 4%; /* Deep, rich black with a hint of blue */
+  --foreground: 0 0% 98%; /* Crisp white */
+  --card: 240 10% 6%; /* Slightly lighter than background */
+  --card-foreground: 0 0% 98%;
+  --popover: 240 10% 6%;
+  --popover-foreground: 0 0% 98%;
   
-  --primary: 224 90% 59%; 
+  --primary: 224 90% 65%; /* Slightly brighter primary for dark mode contrast */
   --primary-foreground: 0 0% 100%;
   
-  --secondary: 214 32% 91%;
-  --secondary-foreground: 222 47% 11%;
-  --muted: 214 32% 91%;
-  --muted-foreground: 215 16% 47%;
-  --accent: 210 40% 96%;
-  --accent-foreground: 222 47% 11%;
+  --secondary: 240 10% 12%;
+  --secondary-foreground: 0 0% 98%;
+  --muted: 240 10% 12%;
+  --muted-foreground: 240 5% 65%;
+  --accent: 240 10% 12%;
+  --accent-foreground: 0 0% 98%;
   --destructive: 0 84% 60%;
-  --destructive-foreground: 210 40% 98%;
-  --border: 214 32% 91%;
-  --input: 214 32% 91%;
-  --ring: 221 83% 53%;
+  --destructive-foreground: 0 0% 98%;
+  --border: 240 10% 12%;
+  --input: 240 10% 12%;
+  --ring: 224 90% 65%;
 }
 
 /* Custom Utilities for Premium Vibe */
@@ -146,10 +145,14 @@
 
 @layer base {
   * {
-    @apply border-border;
+    border-color: var(--color-border);
   }
   body {
-    @apply bg-background text-foreground font-sans antialiased;
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
   
   html.lenis, html.lenis body {

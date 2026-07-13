@@ -40,7 +40,7 @@ export function OurValues() {
       setActiveIndex((prev) => (prev + 1) % values.length)
     }, 6000)
     return () => clearInterval(interval)
-  }, [])
+  }, [values.length])
 
   // Calculate rotation to bring the active item to the 3 o'clock position (Right side)
   const wheelRotation = 90 - (activeIndex * 90)
@@ -131,7 +131,7 @@ export function OurValues() {
                 initial={{ opacity: 0, x: 50, filter: 'blur(10px)' }}
                 animate={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
                 exit={{ opacity: 0, x: -50, filter: 'blur(10px)' }}
-                transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] as any }}
+                transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] }}
                 className="absolute inset-0 flex flex-col justify-center"
               >
                 <h4 className="text-primary font-bold tracking-[0.3em] uppercase text-sm mb-4">

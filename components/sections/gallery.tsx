@@ -80,22 +80,42 @@ export const Gallery = React.memo(function Gallery() {
         // Dynamically calculate aesthetics based on 3D depth
         const scale = 0.6 + (0.4 * depthFactor); // Scale down back cards slightly
         const opacity = 0.15 + (0.85 * depthFactor); // Back cards are transparent
-        const blurAmount = (1 - depthFactor) * 8; // Max 8px blur at the back
         const rotateY = angle * (180 / Math.PI); // Face outward from center
-
+        // Removed expensive blur calculation
         // Apply pure DOM manipulation to bypass React render cycle for 60fps
         card.style.transform = `translate3d(calc(-50% + ${x}px), -50%, ${z}px) rotateY(${rotateY}deg) scale(${scale})`;
         card.style.opacity = opacity.toString();
-        card.style.filter = `blur(${blurAmount}px)`;
         card.style.zIndex = Math.round(depthFactor * 100).toString();
       });
 
       animationFrameId = requestAnimationFrame(render);
     };
 
-    render();
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          if (!animationFrameId) {
+            lastTimeRef.current = performance.now();
+            render();
+          }
+        } else {
+          if (animationFrameId) {
+            cancelAnimationFrame(animationFrameId);
+            animationFrameId = 0;
+          }
+        }
+      },
+      { threshold: 0 }
+    );
 
-    return () => cancelAnimationFrame(animationFrameId);
+    if (containerRef.current) {
+      observer.observe(containerRef.current);
+    }
+
+    return () => {
+      if (animationFrameId) cancelAnimationFrame(animationFrameId);
+      observer.disconnect();
+    };
   }, [radii]);
 
   const handlePointerDown = (e: React.MouseEvent | React.TouchEvent) => {

@@ -259,7 +259,7 @@ export default function BlogPage() {
                 <Search className="w-10 h-10 text-muted-foreground" />
               </div>
               <h3 className="text-3xl font-black font-heading text-foreground mb-3">No articles found</h3>
-              <p className="text-muted-foreground max-w-md text-lg font-light">We couldn't find any articles in this category right now.</p>
+              <p className="text-muted-foreground max-w-md text-lg font-light">We couldn&apos;t find any articles in this category right now.</p>
             </motion.div>
           )}
         </section>
