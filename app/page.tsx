@@ -1,7 +1,7 @@
 import dynamic from 'next/dynamic'
 import { Navbar } from '@/components/layout/navbar'
 import { Footer } from '@/components/layout/footer'
-import { Hero } from '@/components/sections/hero'
+import NewHero from '@/components/sections/NewHero'
 
 const About = dynamic(() => import('@/components/sections/about').then(mod => mod.About), { ssr: true })
 const Services = dynamic(() => import('@/components/sections/services').then(mod => mod.Services), { ssr: true })
@@ -19,7 +19,7 @@ export default function Home() {
     <main className="flex min-h-screen flex-col bg-background selection:bg-primary selection:text-primary-foreground">
       <Navbar />
       
-      <Hero />
+      <NewHero />
       <Clients />
       <About />
       <Services />
