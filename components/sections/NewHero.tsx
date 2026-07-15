@@ -4,7 +4,7 @@
 'use client';
 
 import React, { useState, useEffect, useCallback } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useMotionValue, useTransform, useSpring } from 'framer-motion';
 import { 
   ChevronLeft, 
   ChevronRight, 
@@ -33,6 +33,8 @@ interface HeroSlide {
   subtext: string;
   image: string;
   badges: Badge[];
+  name?: string;
+  role?: string;
 }
 
 const heroSlides: HeroSlide[] = [
@@ -41,27 +43,61 @@ const heroSlides: HeroSlide[] = [
     headlineBlue: "Powerful Business",
     subtext: "We build fast, modern, and SEO-optimized websites designed to grow your brand and drive results.",
     image: "/heroteam/heroimg1.jpeg",
-    badges: []
+    badges: [],
+    name: "Atul Jain",
+    role: "Co-Founder & CEO"
   },
   {
     id: "app-dev",
     headlineBlue: "Scalable Mobile & Web",
     subtext: "Deliver exceptional user experiences with our custom-built, high-performance app solutions.",
     image: "/heroteam/heroimg2.jpeg",
-    badges: []
+    badges: [],
+    name: "Mayank Jain",
+    role: "UI/UX Designer"
   },
   {
     id: "custom-software",
     headlineBlue: "Tailored Software",
     subtext: "Automate your workflows and scale efficiently with our custom enterprise software solutions.",
     image: "/heroteam/heroimg3.jpeg",
-    badges: []
+    badges: [],
+    name: "Shreyansh",
+    role: "Full Stack Developer"
   }
 ];
 
 export default function NewHero() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
+
+  // --- 3D Parallax Logic ---
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+
+  // We rotate slightly less on the Y axis to keep the slider feeling solid
+  const rotateX = useTransform(mouseY, [-0.5, 0.5], ["3deg", "-3deg"]);
+  const rotateY = useTransform(mouseX, [-0.5, 0.5], ["-3deg", "3deg"]);
+  
+  // Spring config for ultra-smooth easing
+  const springConfig = { damping: 30, stiffness: 100, mass: 1.5 };
+  const smoothRotateX = useSpring(rotateX, springConfig);
+  const smoothRotateY = useSpring(rotateY, springConfig);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width - 0.5;
+    const y = (e.clientY - rect.top) / rect.height - 0.5;
+    mouseX.set(x);
+    mouseY.set(y);
+  };
+
+  const handleMouseLeave = () => {
+    setIsHovered(false);
+    // Smoothly reset 3D rotation when mouse leaves
+    mouseX.set(0);
+    mouseY.set(0);
+  };
 
   const nextSlide = useCallback(() => {
     setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
@@ -85,23 +121,28 @@ export default function NewHero() {
     <div className="flex flex-col w-full bg-white relative">
 
       <section 
-        className="relative w-full flex items-center justify-center py-12 md:py-20 lg:py-24"
+        className="relative w-full flex items-center justify-center py-12 md:py-20 lg:py-24 perspective-[2000px]"
         onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
+        onMouseLeave={handleMouseLeave}
+        onMouseMove={handleMouseMove}
         onFocus={() => setIsHovered(true)}
         onBlur={() => setIsHovered(false)}
       >
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-[85rem] relative z-10">
           
-          {/* PREMIUM RAZORPAY-STYLE WRAPPER CARD */}
-          <div className="relative w-full bg-white border border-[#E5E7EB] rounded-[2rem] lg:rounded-[2.5rem] shadow-[0_20px_60px_-15px_rgba(0,0,0,0.05)] overflow-hidden flex flex-col lg:flex-row min-h-[500px] lg:min-h-[550px]">
+          {/* PREMIUM RAZORPAY-STYLE WRAPPER CARD WITH 3D PARALLAX */}
+          <motion.div 
+            style={{ rotateX: smoothRotateX, rotateY: smoothRotateY }}
+            className="relative w-full bg-white border border-[#E5E7EB] rounded-[2rem] lg:rounded-[2.5rem] shadow-[0_20px_60px_-15px_rgba(0,0,0,0.05)] overflow-hidden flex flex-col lg:flex-row min-h-[500px] lg:min-h-[550px] transform-gpu"
+          >
             
-
+            {/* Subtle Grid Texture for Premium Polish */}
+            <div className="absolute inset-0 z-0 opacity-[0.02] pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, black 1px, transparent 0)', backgroundSize: '24px 24px' }} />
 
             {/* Navigation Arrows - Fixed to the edges of the card */}
             <button 
               onClick={prevSlide}
-              className="absolute left-3 lg:left-6 top-1/2 -translate-y-1/2 z-40 w-12 h-12 flex items-center justify-center rounded-full bg-white/90 hover:bg-white border border-gray-200 text-gray-700 transition-all shadow-lg hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-blue-600 backdrop-blur-md"
+              className="absolute left-3 lg:left-6 top-1/2 -translate-y-1/2 z-40 w-12 h-12 flex items-center justify-center rounded-full bg-white/90 hover:bg-white hover:scale-110 active:scale-95 border border-gray-200 text-gray-700 transition-all duration-300 shadow-lg hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-blue-600 backdrop-blur-md"
               aria-label="Previous slide"
             >
               <ChevronLeft className="w-6 h-6" />
@@ -109,7 +150,7 @@ export default function NewHero() {
             
             <button 
               onClick={nextSlide}
-              className="absolute right-3 lg:right-6 top-1/2 -translate-y-1/2 z-40 w-12 h-12 flex items-center justify-center rounded-full bg-white/90 hover:bg-white border border-gray-200 text-gray-700 transition-all shadow-lg hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-blue-600 backdrop-blur-md"
+              className="absolute right-3 lg:right-6 top-1/2 -translate-y-1/2 z-40 w-12 h-12 flex items-center justify-center rounded-full bg-white/90 hover:bg-white hover:scale-110 active:scale-95 border border-gray-200 text-gray-700 transition-all duration-300 shadow-lg hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-blue-600 backdrop-blur-md"
               aria-label="Next slide"
             >
               <ChevronRight className="w-6 h-6" />
@@ -123,18 +164,18 @@ export default function NewHero() {
                   <AnimatePresence>
                     <motion.span
                       key={slide.id}
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
-                      transition={{ duration: 0.15, ease: "linear" }}
+                      initial={{ y: 30, opacity: 0 }}
+                      animate={{ y: 0, opacity: 1 }}
+                      exit={{ y: -30, opacity: 0 }}
+                      transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
                       className="absolute left-0 top-0"
                     >
                       {slide.headlineBlue}
                     </motion.span>
                   </AnimatePresence>
                 </div>
-                {/* FIXED BLACK HEADLINE */}
-                <span className="block text-gray-900">Solutions that Convert</span>
+                {/* GRADIENT HEADLINE */}
+                <span className="block text-transparent bg-clip-text bg-gradient-to-r from-slate-900 to-slate-500">Solutions that Convert</span>
               </h1>
               
               {/* DYNAMIC SUBTEXT */}
@@ -146,10 +187,10 @@ export default function NewHero() {
                 <AnimatePresence>
                   <motion.p
                     key={slide.id}
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.15, ease: "linear" }}
+                    initial={{ y: 20, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    exit={{ y: -20, opacity: 0 }}
+                    transition={{ duration: 0.5, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
                     className="absolute inset-0 text-base md:text-lg text-gray-600 leading-relaxed font-medium"
                   >
                     {slide.subtext}
@@ -161,9 +202,10 @@ export default function NewHero() {
               <div className="flex flex-wrap items-center gap-6">
                 <Link 
                   href="/contact"
-                  className="inline-flex items-center justify-center px-8 py-3.5 text-base font-semibold text-white bg-blue-600 rounded-full shadow-lg shadow-blue-600/30 hover:bg-blue-700 hover:shadow-xl hover:shadow-blue-600/40 transition-all duration-300 transform hover:-translate-y-1"
+                  className="relative inline-flex items-center justify-center px-8 py-3.5 text-base font-semibold text-white bg-blue-600 rounded-full shadow-[0_0_20px_rgba(37,99,235,0.4)] hover:shadow-[0_0_35px_rgba(37,99,235,0.6)] hover:bg-blue-500 transition-all duration-300 transform hover:-translate-y-1 overflow-hidden"
                 >
-                  Sign Now
+                  <span className="absolute inset-0 w-full h-full -mt-1 rounded-lg opacity-30 bg-gradient-to-b from-transparent via-transparent to-black" />
+                  <span className="relative">Sign Now</span>
                 </Link>
                 
                 <Link 
@@ -184,10 +226,10 @@ export default function NewHero() {
               <AnimatePresence>
                 <motion.div
                   key={slide.id}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.15, ease: "linear" }}
+                  initial={{ opacity: 0, scale: 1.05 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.98 }}
+                  transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
                   className="absolute inset-0 z-10"
                 >
                   {/* Image blending directly into the slider without a box */}
@@ -214,28 +256,55 @@ export default function NewHero() {
                       <span className="text-sm md:text-base font-bold text-gray-900 whitespace-nowrap pr-2">{badge.label}</span>
                     </div>
                   ))}
+
+                  {/* Team Member Name Tag */}
+                  {(slide.name || slide.role) && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 15 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -15 }}
+                      transition={{ duration: 0.5, delay: 0.2 }}
+                      className="absolute bottom-6 right-6 lg:bottom-8 lg:right-8 bg-white/80 backdrop-blur-md px-5 py-3 rounded-2xl shadow-xl shadow-black/5 border border-white/60 z-30"
+                    >
+                      <div className="flex flex-col text-right lg:text-left">
+                        <span className="text-sm font-bold text-gray-900">{slide.name}</span>
+                        <span className="text-xs font-semibold text-blue-600 uppercase tracking-wider mt-0.5">{slide.role}</span>
+                      </div>
+                    </motion.div>
+                  )}
                 </motion.div>
               </AnimatePresence>
 
             </div>
 
-            {/* FIXED Dot Indicators - Pinned at the bottom of the card, aligned with text */}
-            <div className="absolute bottom-6 md:bottom-8 left-6 md:left-12 lg:left-20 flex items-center gap-2.5 z-40">
+            {/* Animated Progress Indicators */}
+            <div className="absolute bottom-6 md:bottom-8 left-6 md:left-12 lg:left-20 flex items-center gap-3 z-40">
               {heroSlides.map((_, idx) => (
                 <button
                   key={idx}
                   onClick={() => setCurrentSlide(idx)}
-                  className={`h-2.5 rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 ${
-                    idx === currentSlide 
-                      ? 'bg-blue-600 w-8' 
-                      : 'bg-gray-300/80 hover:bg-gray-400 w-2.5'
+                  className={`relative h-2.5 rounded-full overflow-hidden transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 ${
+                    idx === currentSlide ? 'w-12 bg-gray-200' : 'w-2.5 bg-gray-200 hover:bg-gray-300'
                   }`}
                   aria-label={`Go to slide ${idx + 1}`}
-                />
+                >
+                  {idx === currentSlide && !isHovered && (
+                    <motion.div
+                      key={`progress-${currentSlide}`}
+                      initial={{ width: "0%" }}
+                      animate={{ width: "100%" }}
+                      transition={{ duration: 5, ease: "linear" }}
+                      className="absolute top-0 left-0 h-full bg-blue-600"
+                    />
+                  )}
+                  {idx === currentSlide && isHovered && (
+                    <div className="absolute top-0 left-0 h-full w-full bg-blue-600" />
+                  )}
+                </button>
               ))}
             </div>
             
-          </div>
+          </motion.div>
         </div>
       </section>
 
